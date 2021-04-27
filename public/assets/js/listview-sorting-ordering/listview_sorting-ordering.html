@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+    <script>
+        // Ignore this in your implementation
+        window.isMbscDemo = true;
+    </script>
+
+    <title>Sorting & ordering</title>
+
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+    <!-- Mobiscroll JS and CSS Includes -->
+    <link rel="stylesheet" href="css/mobiscroll.jquery.min.css">
+    <script src="js/mobiscroll.jquery.min.js"></script>
+
+    <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    body,
+    html {
+        height: 100%;
+    }
+
+    </style>
+
+</head>
+<body>
+
+<div mbsc-page class="demo-sorting-ordering">
+  <div style="height:100%">
+      <div mbsc-form>
+        <div class="mbsc-note mbsc-note-primary mbsc-align-center">
+            Reorder items from the drag handle or grab and hold to sort.
+        </div>
+        <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">Handle on the right</div>
+            <ul id="demo" class="mbsc-cloak">
+                <li><img src="https://img.mobiscroll.com/demos/m1.png" />
+                    <h3>Barry Lyon</h3>
+                    <p>(202) 555-0193</p>
+                </li>
+                <li><img src="https://img.mobiscroll.com/demos/f1.png" />
+                    <h3>Hortense Tinker</h3>
+                    <p>(202) 555-0127</p>
+                </li>
+                <li><img src="https://img.mobiscroll.com/demos/m2.png" />
+                    <h3>Carl Hambledon</h3>
+                    <p>(202) 555-0147</p>
+                </li>
+                <li><img src="https://img.mobiscroll.com/demos/f2.png" />
+                    <h3>Arlene Sharman</h3>
+                    <p>(202) 555-0190</p>
+                </li>
+            </ul>
+        </div>
+        <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">Handle on the left</div>
+            <ul id="left" class="mbsc-cloak">
+                <li><img src="https://img.mobiscroll.com/demos/m1.png" />
+                    <h3 style="">Barry Lyon</h3>
+                    <p>(202) 555-0193</p>
+                </li>
+                <li><img src="https://img.mobiscroll.com/demos/f1.png" />
+                    <h3>Hortense Tinker</h3>
+                    <p>(202) 555-0127</p>
+                </li>
+                <li><img src="https://img.mobiscroll.com/demos/m2.png" />
+                    <h3>Carl Hambledon</h3>
+                    <p>(202) 555-0147</p>
+                </li>
+                <li><img src="https://img.mobiscroll.com/demos/f2.png" />
+                    <h3>Arlene Sharman</h3>
+                    <p>(202) 555-0190</p>
+                </li>
+            </ul>
+        </div>
+        <div class="mbsc-form-group">
+            <div class="mbsc-form-group-title">Tap and hold to start reordering</div>
+            <ul id="no-handle" class="mbsc-cloak">
+                <li><img src="https://img.mobiscroll.com/demos/m1.png" />
+                    <h3>Barry Lyon</h3>
+                    <p>(202) 555-0193</p>
+                </li>
+                <li><img src="https://img.mobiscroll.com/demos/f1.png" />
+                    <h3>Hortense Tinker</h3>
+                    <p>(202) 555-0127</p>
+                </li>
+                <li><img src="https://img.mobiscroll.com/demos/m2.png" />
+                    <h3>Carl Hambledon</h3>
+                    <p>(202) 555-0147</p>
+                </li>
+                <li><img src="https://img.mobiscroll.com/demos/f2.png" />
+                    <h3>Arlene Sharman</h3>
+                    <p>(202) 555-0190</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    mobiscroll.settings = {
+        lang: 'en',                // Specify language like: lang: 'pl' or omit setting to use default
+        theme: 'windows',          // Specify theme like: theme: 'ios' or omit setting to use default
+            themeVariant: 'light'  // More info about themeVariant: https://docs.mobiscroll.com/4-10-8/listview#opt-themeVariant
+    };
+    
+    $(function () {
+    
+        // Mobiscroll Listview initialization
+        $('#demo').mobiscroll().listview({
+            swipe: false,          // More info about swipe: https://docs.mobiscroll.com/4-10-8/listview#opt-swipe
+            sortable: {            // More info about sortable: https://docs.mobiscroll.com/4-10-8/listview#opt-sortable
+                handle: 'right'
+            },
+            enhance: true          // More info about enhance: https://docs.mobiscroll.com/4-10-8/listview#opt-enhance
+        });
+    
+        // Mobiscroll Listview initialization
+        $('#left').mobiscroll().listview({
+            swipe: false,          // More info about swipe: https://docs.mobiscroll.com/4-10-8/listview#opt-swipe
+            sortable: {            // More info about sortable: https://docs.mobiscroll.com/4-10-8/listview#opt-sortable
+                handle: 'left'
+            },
+            enhance: true          // More info about enhance: https://docs.mobiscroll.com/4-10-8/listview#opt-enhance
+        });
+    
+        // Mobiscroll Listview initialization
+        $('#no-handle').mobiscroll().listview({
+            swipe: false,          // More info about swipe: https://docs.mobiscroll.com/4-10-8/listview#opt-swipe
+            sortable: true,        // More info about sortable: https://docs.mobiscroll.com/4-10-8/listview#opt-sortable
+            enhance: true          // More info about enhance: https://docs.mobiscroll.com/4-10-8/listview#opt-enhance
+        });
+    
+    });
+</script>
+
+</body>
+</html>
