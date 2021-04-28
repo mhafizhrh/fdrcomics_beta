@@ -1,170 +1,208 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<title>{{ config('app.name') }} | @yield('sub-title', '404 Not Found')</title>
-
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/fontawesome.min.css" integrity="sha512-OdEXQYCOldjqUEsuMKsZRj93Ht23QRlhIb8E/X0sbwZhme8eUw6g8q7AdxGJKakcBbv7+/PX0Gc2btf7Ru8cZA==" crossorigin="anonymous" />
-	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-	<link rel="stylesheet" href="{{ asset('storage/assets/css/custom.styles.css') }}">
-
-	<style>
-		
-	</style>
-</head>
-
-<body>
-	<div class="mb-3">
-	  	<nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
-	  		<!-- <div class="container"> -->
-		    	<a class="navbar-brand" href="/">{{ config('app.name') }}</a>
-		    	<!-- <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt=""> -->
-		    	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				    <span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse offcanvas-collapse" id="navbarNav">
-					<ul class="navbar-nav ml-auto">
-						<li class="nav-item active"><a href="{{ route('home') }}" class="nav-link bg-dark">Home</a></li>
-						@if (Auth::check() && Auth::user()->level == 'admin')
-						<li class="nav-item"><a href="{{ route('comic.create') }}" class="nav-link bg-dark">New Comic</a></li>
-						@endif
-						<li class="nav-item dropdown">
-					        <a class="nav-link dropdown-toggle bg-dark" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					          	@if (Auth::check())
-					          		<i class="fa fa-user"></i>
-					          		{{ Auth::user()->username }}
-					          	@else
-					          		<i class="fa fa-user-times"></i>
-					          		Guest
-					          	@endif
-					        </a>
-					        <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">
-					        	@if (!Auth::check())
-					          	<a class="dropdown-item text-white" href="{{ route('login') }}"><i class="fa fa-sign-in-alt"></i> Login</a>
-					          	<a class="dropdown-item text-white" href="{{ route('register') }}"><i class="fa fa-user-plus"></i> Register</a>
-					          	@else
-					          	<a class="dropdown-item text-white" href="{{ route('user.history') }}"><i class="fa fa-history"></i> History</a>
-					          	<a class="dropdown-item text-white" href="{{ route('logout') }}"><i class="fa fa-power-off"></i> Logout</a>
-					          	@endif
-					        </div>
-					    </li>
-					</ul>
-					<!-- <form class="form-inline ml-auto">
-					    <div class="input-group">
-					    	<input type="text" name="" class="form-control" placeholder="Search comic...">
-					    	<div class="input-group-append">
-					    		<button class="btn btn-sm btn-success"><i class="fa fa-search"></i></button>
-					    	</div>
-					    </div>
-					</form> -->
-				</div>
-		    <!-- </div> -->
-	  	</nav>
-	</div>
-
-	<div class="container-fluid">
-		@yield('content')
-	</div>
-
-	<footer class="bg-dark text-white mt-3">
-		<div class="container p-4">
-			<div class="row">
-				<div class="col-lg-6 col-12">
-					<h5>Footer Content</h5>
-					<p class="text-justify">
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-					</p>
-				</div>
-				<div class="col-lg-3 col-6">
-					<h5 class="text-uppercase">Links</h5>
-					<ul class="list-unstyled mb-0">
-						<li><a href="#" class="text-white">Link 1</a></li>
-						<li><a href="#" class="text-white">Link 2</a></li>
-						<li><a href="#" class="text-white">Link 3</a></li>
-					</ul>
-				</div>
-				<div class="col-lg-3 col-6">
-					<h5 class="text-uppercase">Links</h5>
-					<ul class="list-unstyled mb-0">
-						<li><a href="#" class="text-white">Link 1</a></li>
-						<li><a href="#" class="text-white">Link 2</a></li>
-						<li><a href="#" class="text-white">Link 3</a></li>
-					</ul>
-				</div>
-			</div>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ config('app.name') }}</title>
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="{{ asset('storage') }}/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+        <!-- summernote -->
+  		<link rel="stylesheet" href="{{ asset('storage') }}/AdminLTE/plugins/summernote/summernote-bs4.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="{{ asset('storage') }}/AdminLTE/dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+    </head>
+    <body class="hold-transition sidebar-mini sidebar-collapse dark-mode">
+		<div class="wrapper">
+		    <!-- Navbar -->
+		    <nav class="main-header navbar navbar-expand navbar-dark navbar-light">
+		        <!-- Left navbar links -->
+		        <ul class="navbar-nav">
+		            <li class="nav-item">
+		                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+		            </li>
+		            <li class="nav-item d-none d-sm-inline-block">
+		                <a href="{{ route('home') }}" class="nav-link">Home</a>
+		            </li>
+		            <li class="nav-item d-none d-sm-inline-block">
+		                <a href="#" class="nav-link">Contact</a>
+		            </li>
+		        </ul>
+		        <!-- Right navbar links -->
+		        <ul class="navbar-nav ml-auto">
+		            <!-- Navbar Search -->
+		            <li class="nav-item">
+		                <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+		                <i class="fas fa-search"></i>
+		                </a>
+		                <div class="navbar-search-block">
+		                    <form class="form-inline">
+		                        <div class="input-group input-group-sm">
+		                            <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+		                            <div class="input-group-append">
+		                                <button class="btn btn-navbar" type="submit">
+		                                <i class="fas fa-search"></i>
+		                                </button>
+		                                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+		                                <i class="fas fa-times"></i>
+		                                </button>
+		                            </div>
+		                        </div>
+		                    </form>
+		                </div>
+		            </li>
+		            <li class="nav-item">
+		                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+		                <i class="fas fa-expand-arrows-alt"></i>
+		                </a>
+		            </li>
+		            <li class="nav-item">
+		                <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+		                <i class="fas fa-th-large"></i>
+		                </a>
+		            </li>
+		        </ul>
+		    </nav>
+		    <!-- /.navbar -->
+		    <!-- Main Sidebar Container -->
+		    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+		        <!-- Brand Logo -->
+		        <a href="{{ route('home') }}" class="brand-link">
+		        <img src="{{ asset('storage') }}/AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+		        <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
+		        </a>
+		        <!-- Sidebar -->
+		        <div class="sidebar">
+		            <!-- Sidebar user panel (optional) -->
+		            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+		                <div class="image">
+		                    <img src="{{ asset('storage') }}/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+		                </div>
+		                <div class="info">
+		                	@if (Auth::check())
+		                    <p class="d-block">{{ Auth::user()->username }}</p>
+		                    @else
+		                    <a href="{{ route('login') }}" class="d-block"><i class="fas fa-lock"></i> Login</a>
+		                    @endif
+		                </div>
+		            </div>
+		            <!-- Sidebar Menu -->
+		            <nav class="mt-2">
+		                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+		                    <!-- Add icons to the links using the .nav-icon class
+		                        with font-awesome or any other icon font library -->
+		                    <li class="nav-item">
+		                        <a href="{{ route('home') }}" class="nav-link">
+		                            <i class="nav-icon fas fa-home"></i>
+		                            <p>
+		                                Home
+		                                <!-- <span class="right badge badge-danger">New</span> -->
+		                            </p>
+		                        </a>
+		                    </li>
+		                    @if (Auth::check())
+		                    <li class="nav-item">
+		                        <a href="#" class="nav-link">
+		                            <i class="nav-icon fas fa-book"></i>
+		                            <p>
+		                                Bookmarks
+		                            </p>
+		                        </a>
+		                    </li>
+		                    <li class="nav-item">
+		                        <a href="#" class="nav-link">
+		                            <i class="nav-icon fas fa-history"></i>
+		                            <p>
+		                                History
+		                            </p>
+		                        </a>
+		                    </li>
+		                    <li class="nav-item">
+		                        <a href="#" class="nav-link">
+		                            <i class="nav-icon fas fa-user"></i>
+		                            <p>
+		                                My Profile
+		                            </p>
+		                        </a>
+		                    </li>
+		                    <li class="nav-item">
+		                        <a href="{{ route('logout') }}" class="nav-link">
+		                            <i class="nav-icon fas fa-power-off"></i>
+		                            <p>
+		                                Logout
+		                            </p>
+		                        </a>
+		                    </li>
+		                    @else
+		                    <li class="nav-item">
+		                    	<a href="{{ route('login') }}" class="nav-link">
+		                    		<i class="nav-icon fas fa-lock"></i>
+		                    		<p>
+		                    			Login
+		                    		</p>
+		                    	</a>
+		                    </li>
+		                    @endif
+		                </ul>
+		            </nav>
+		            <!-- /.sidebar-menu -->
+		        </div>
+		        <!-- /.sidebar -->
+		    </aside>
+		    <!-- Content Wrapper. Contains page content -->
+		    @yield('content')
+		    <!-- Control Sidebar -->
+		    <aside class="control-sidebar control-sidebar-dark">
+		        <!-- Control sidebar content goes here -->
+		        <div class="p-3">
+		            <h5>Title</h5>
+		            <p>Sidebar content</p>
+		        </div>
+		    </aside>
+		    <!-- /.control-sidebar -->
+		    <!-- Main Footer -->
+		    <footer class="main-footer">
+		        <!-- To the right -->
+		        <div class="float-right d-none d-sm-inline">
+		            Anything you want
+		        </div>
+		        <!-- Default to the left -->
+		        <strong>Copyright &copy; 2021 <a href="https://sancomics.xyz">SANComics</a>.</strong> All rights reserved.
+		    </footer>
 		</div>
-		<div class="text-center p-3 bg-secondary">
-			&copy; {{ date('Y') }} Copyright : 
-			<a href="https://sancomics.xyz" class="text-light">sancomics.xyz</a>
-		</div>
-	</footer>
+        <!-- jQuery -->
+        <script src="{{ asset('storage') }}/AdminLTE/plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap 4 -->
+        <script src="{{ asset('storage') }}/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ asset('storage') }}/AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+        <!-- Summernote -->
+		<script src="{{ asset('storage') }}/AdminLTE/plugins/summernote/summernote-bs4.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="{{ asset('storage') }}/AdminLTE/dist/js/adminlte.min.js"></script>
+        <!-- AdminLTE for demo purposes -->
+        <script src="{{ asset('storage') }}/AdminLTE/dist/js/demo.js"></script>
+        <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+        <script>
+        	$(document).ready(function() {
+			    $('#datatables').DataTable();
+			} );
 
-	<!-- Optional JavaScript -->
-	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-	<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
-	<script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
-	<script>
+			$(function () {
+			  	bsCustomFileInput.init();
+			});
 
-		$(".js-example-tokenizer").select2({
-		    tags: true,
-		    tokenSeparators: [',', ' ']
-		})
+			$(function () {
+			    // Summernote
+			    $('#summernote').summernote()
 
-		$('.confirm-delete').on('click', function(e){
-			e.preventDefault();
-			Swal.fire({
-			    title: 'Are you sure?',
-			    text: "You won't be able to revert this!",
-			    icon: 'warning',
-			    showCancelButton: true,
-			    confirmButtonColor: '#3085d6',
-			    cancelButtonColor: '#d33',
-			    confirmButtonText: 'Yes, delete it!'
-			}).then((result) => {
-			    if (result.value) {
-			       
-			       $(this).parents('form').submit();
-			    } else {
-
-			    	return false;
-			    }
+			    // CodeMirror
+			    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+			      	airMode: true
+			    });
 			})
-		})
-
-		$('.confirm-delete-anchor').on('click', function(e){
-			e.preventDefault();
-			Swal.fire({
-			    title: 'Are you sure?',
-			    text: "You won't be able to revert this!",
-			    icon: 'warning',
-			    showCancelButton: true,
-			    confirmButtonColor: '#3085d6',
-			    cancelButtonColor: '#d33',
-			    confirmButtonText: 'Yes, delete it!'
-			}).then((result) => {
-			    if (result.value) {
-			       
-			       window.location.href = $(this)[0].href;
-			       console.log($(this)[0].href);
-			    } else {
-
-			    	return false;
-			    }
-			})
-		})
-	</script>
-</body>
-
+        </script>
+    </body>
 </html>

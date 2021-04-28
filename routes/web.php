@@ -67,8 +67,8 @@ Route::get('/search/title/{title}/type/{type}/genres/{genre}', [SearchController
 Route::post('/search/filter', [SearchController::class, 'filter'])
 ->name('search.filter');
 
-Route::get('/comic/{comic_id}', [ComicController::class, 'show'])
-->name('comic.show');
+Route::get('/comics/{comic_id}', [ComicController::class, 'show'])
+->name('comics');
 
 Route::get('/read/{chapter_id}', [ChapterController::class, 'read'])
 ->name('chapter.read');
