@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminAuthorsController;
 
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ReadController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ComicController;
 use App\Http\Controllers\ChapterController;
@@ -70,8 +71,8 @@ Route::post('/search/filter', [SearchController::class, 'filter'])
 Route::get('/comics/{comic_id}', [ComicController::class, 'show'])
 ->name('comics');
 
-Route::get('/read/{chapter_id}', [ChapterController::class, 'read'])
-->name('chapter.read');
+Route::get('/read/{chapter_id}', [ReadController::class, 'index'])
+->name('read');
 
 
 Route::middleware(['auth'])->group(function () {

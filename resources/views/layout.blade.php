@@ -13,6 +13,9 @@
         <!-- Theme style -->
         <link rel="stylesheet" href="{{ asset('storage') }}/AdminLTE/dist/css/adminlte.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+        <style>
+        	a:visited { color: #f0f0f0; }
+        </style>
     </head>
     <body class="hold-transition sidebar-mini sidebar-collapse dark-mode">
 		<div class="wrapper">
@@ -197,11 +200,6 @@
 			$(function () {
 			    // Summernote
 			    $('#summernote').summernote()
-
-			    // CodeMirror
-			    CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
-			      	airMode: true
-			    });
 			})
         </script>
     </body>

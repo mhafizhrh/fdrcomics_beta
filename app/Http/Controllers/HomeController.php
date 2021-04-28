@@ -13,7 +13,7 @@ class HomeController extends Controller
 {
     protected function index()
     {
-        $comics = Comic::all();
+        $comics = Comic::paginate(20);
 
         return view('home', compact('comics'));
     }
