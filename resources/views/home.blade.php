@@ -22,7 +22,7 @@
                             <div class="row">
                                 @foreach ($comics as $key)
                                 <div class="col-md-6 mb-2">
-                                    <h5 class="mt-0">{{ $key->title }}</h5>
+                                    <h5 class="mt-0"><a href="{{ route('comics', $key->id) }}">{{ $key->title }}</a></h5>
                                     <img src="@if ($key->img_path) {{ asset('storage/'.$key->img_path) }} @else {{ asset('storage/images/sancomics_cover.png') }} @endif" width="100" class="img-thumbnail float-left mr-2">
                                     <ul class="list-unstyled">
                                         @foreach ($key->chapters as $key)

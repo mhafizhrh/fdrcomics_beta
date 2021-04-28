@@ -68,7 +68,7 @@ Route::get('/search/title/{title}/type/{type}/genres/{genre}', [SearchController
 Route::post('/search/filter', [SearchController::class, 'filter'])
 ->name('search.filter');
 
-Route::get('/comics/{comic_id}', [ComicController::class, 'show'])
+Route::get('/comics/{comic_id}', [ComicController::class, 'index'])
 ->name('comics');
 
 Route::get('/read/{chapter_id}', [ReadController::class, 'index'])
@@ -78,6 +78,15 @@ Route::get('/read/{chapter_id}', [ReadController::class, 'index'])
 Route::middleware(['auth'])->group(function () {
 
 	Route::middleware(['role:reader,admin'])->group(function () {
+
+		Route::post('/comics/{comic_id}/bookmark', [ComicController::class, 'bookmark'])
+		->name('comics.bookmark');
+
+		Route::post('/comics/{comic_id}/rating', [ComicController::class, 'rating'])
+		->name('comics.rating');
+
+		Route::get('/user/bookmarks', [UserController::class, 'bookmarks'])
+		->name('user.bookmarks');
 
 		Route::get('/user/history', [UserController::class, 'history'])
 		->name('user.history');
@@ -143,63 +152,5 @@ Route::middleware(['auth'])->group(function () {
 
 		Route::post('/admin/authors/store', [AdminAuthorsController::class, 'store'])
 		->name('admin.authors.store');
-
-
-
-
-
-
-
-
-
-
-
-		// Comics
-
-		Route::get('/admin/comic/list', [AdminDashboardController::class, 'dashboard'])
-		->name('admin.comic.list');
-
-		Route::get('/admin/comic/new', [AdminDashboardController::class, 'dashboard'])
-		->name('admin.comic.new');
-
-		// Comic
-
-		Route::get('/comic/create/new', [ComicController::class, 'create'])
-		->name('comic.create');
-
-		Route::post('/comic/create/store', [ComicController::class, 'store'])
-		->name('comic.store');
-
-		Route::get('/comic/{comic_id}/edit', [ComicController::class, 'edit'])
-		->name('comic.edit');
-
-		// Chapter
-
-		Route::get('/chapter/{comic_id}/create', [ChapterController::class, 'create'])
-		->name('chapter.create');
-
-		Route::post('/chapter/{comic_id}/store', [ChapterController::class, 'store'])
-		->name('chapter.store');
-
-		Route::get('/chapter/{chapter_id}/edit', [ChapterController::class, 'edit'])
-		->name('chapter.edit');
-
-		Route::delete('/chapter/delete', [ChapterController::class, 'delete'])
-		->name('chapter.delete');
-
-		// Chapter Content
-
-		Route::post('/chapter/content/{chapter_id}/store', [ChapterContentController::class, 'store'])
-		->name('chapter.content.store');
-
-		Route::put('/comic/{comic_id}/{title}/chapter/{chapter}/update', [ChapterContentController::class, 'update'])
-		->name('comic.chapter.content.update');
-
-		Route::get('/chapter/content/{chapter_id}/delete/{chapter_content_id}', [ChapterContentController::class, 'delete'])
-		->name('chapter.content.delete');
-
-		Route::delete('/chapter/content/{chapter_id}/delete/all', [ChapterContentController::class, 'deleteAll'])
-		->name('chapter.content.delete.all');
-
 	});
 });

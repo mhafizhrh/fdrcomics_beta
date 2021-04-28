@@ -21,6 +21,11 @@ class Comic extends Model
         return $this->hasOne(Language::class, 'id', 'language_id');
     }
 
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class)->selectRaw('SUM(rating)/COUNT(*) AS rating, COUNT(*) AS users')->first();
+    }
+    
     public function chapters()
     {
         return $this->hasMany(Chapter::class)->orderBy('chapter', 'DESC');

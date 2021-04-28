@@ -29,18 +29,21 @@ class AdminComicsController extends Controller
 
     protected function store(Request $request)
     {
-        // dd($request->input());
+        dd($request->file());
         $request->validate([
             'title' => 'required',
             'author_id' => 'required|numeric',
             'language_id' => 'required|numeric',
         ]);
 
+        $img_path = $request->file('img_path') == null ? 'images/sancomics_cover.png' : $request->file('img_path');
+
         $comics = new Comic();
         $comics->title = $request->input('title');
         $comics->author_id = $request->input('author_id');
         $comics->language_id = $request->input('language_id');
         $comics->synopsis = $request->input('synopsis');
+        $comics->img_path = $img_path;
         $comics->status = $request->input('status');
         $comics->save();
 
@@ -74,11 +77,13 @@ class AdminComicsController extends Controller
             'language_id' => 'required|numeric',
         ]);
 
+        $img_path = $request->file('img_path') == null ? 'images/sancomics_cover.png' : $request->file('img_path');
 
         $comic = Comic::find($comic_id);
         $comic->title = $request->input('title');
         $comic->author_id = $request->input('author_id');
         $comic->language_id = $request->input('language_id');
+        $comic->img_path = $img_path;
 
         if ($request->hasFile('img_path')) {
 

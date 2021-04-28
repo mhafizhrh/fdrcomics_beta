@@ -16,18 +16,12 @@ class CommentController extends Controller
     		'comment' => 'required|max:500',
     	]);
 
-    	$chapter = Chapter::find($chapter_id);
+        $comment = new Comment();
+        $comment->user_id = Auth::user()->id;
+        $comment->chapter_id = $chapter_id;
+        $comment->comment = nl2br($request->input('comment'));
+        $comment->save();
 
-        // dd($chapter);
-
-    	abort_if(!$chapter, 404);
-
-    	$comment = new Comment();
-    	$comment->user_id = Auth::user()->id;
-    	$comment->chapter_id = $chapter->id;
-    	$comment->comment = nl2br($request->input('comment'));
-    	$comment->save();
-
-    	return redirect(route('chapter.read', $chapter->id) . '#comment');
+        return redirect()->route('read', $chapter_id);
     }
 }

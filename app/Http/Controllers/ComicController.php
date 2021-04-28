@@ -4,26 +4,87 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Comic;
 use App\Models\Genre;
 use App\Models\Chapter;
 use App\Models\ChapterContent;
 use App\Models\ComicGenre;
+use App\Models\Bookmark;
+use App\Models\Rating;
 
 class ComicController extends Controller
 {
-	protected function show($comic_id)
+	protected function index($comic_id)
 	{
 		$comic = Comic::find($comic_id);
+        if (Auth::check()) {
+            $bookmark = Bookmark::where('comic_id', $comic_id)
+                    ->where('user_id', Auth::user()->id)
+                    ->first();
+            $rating = Rating::where('comic_id', $comic_id)
+                    ->where('user_id', Auth::user()->id)
+                    ->first();
+        } else {
 
-        // dd($comic->language);
-        
-		abort_if(!$comic, 404);
+            $bookmark = null;
+            $rating = null;
+        }
 
-		// dd($comic->chapter->count());
-
-		return view('comic.show', compact('comic'));
+		return view('comics.index', compact('comic', 'bookmark', 'rating'));
 	}
+
+    protected function bookmark($comic_id)
+    {
+        $cek = Bookmark::where('comic_id', $comic_id)
+                ->where('user_id', Auth::user()->id)
+                ->first();
+
+        if (!$cek) {
+
+            $bookmark = new Bookmark();
+            $bookmark->comic_id = $comic_id;
+            $bookmark->user_id = Auth::user()->id;
+            $bookmark->save();
+        } else {
+
+            Bookmark::where('comic_id', $comic_id)
+                ->where('user_id', Auth::user()->id)
+                ->delete();
+        }
+
+        return redirect()->route('comics', $comic_id);
+    }
+
+    protected function rating(Request $request, $comic_id)
+    {
+        $cek = Rating::where('comic_id', $comic_id)
+                ->where('user_id', Auth::user()->id)
+                ->first();
+
+        if (!$cek) {
+
+            $rating = new Rating();
+            $rating->comic_id = $comic_id;
+            $rating->user_id = Auth::user()->id;
+            $rating->rating = $request->input('rating');
+            $rating->save();
+        } else {
+
+            if ($request->input('rating') == 'unrate') {
+
+                Rating::where('comic_id', $comic_id)
+                    ->where('user_id', Auth::user()->id)
+                    ->delete();
+            } else {
+
+                $cek->rating = $request->input('rating');
+                $cek->save();
+            }
+        }
+
+        return redirect()->route('comics', $comic_id);
+    }
 
     protected function create()
     {

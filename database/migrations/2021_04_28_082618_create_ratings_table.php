@@ -17,6 +17,7 @@ class CreateRatingsTable extends Migration
             $table->id();
             $table->bigInteger('comic_id');
             $table->bigInteger('user_id');
+            $table->bigInteger('rating');
             $table->timestamps();
             $table->softDeletes();
         });

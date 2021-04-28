@@ -15,6 +15,13 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
         <style>
         	a:visited { color: #f0f0f0; }
+        	.two-line-text {
+        		overflow: hidden;
+			    text-overflow: ellipsis;
+			    display: -webkit-box;
+			    -webkit-line-clamp: 2; /* number of lines to show */
+			    -webkit-box-orient: vertical;
+        	}
         </style>
     </head>
     <body class="hold-transition sidebar-mini sidebar-collapse dark-mode">
@@ -107,7 +114,7 @@
 		                    </li>
 		                    @if (Auth::check())
 		                    <li class="nav-item">
-		                        <a href="#" class="nav-link">
+		                        <a href="{{ route('user.bookmarks') }}" class="nav-link">
 		                            <i class="nav-icon fas fa-book"></i>
 		                            <p>
 		                                Bookmarks
@@ -115,7 +122,7 @@
 		                        </a>
 		                    </li>
 		                    <li class="nav-item">
-		                        <a href="#" class="nav-link">
+		                        <a href="{{ route('user.history') }}" class="nav-link">
 		                            <i class="nav-icon fas fa-history"></i>
 		                            <p>
 		                                History
