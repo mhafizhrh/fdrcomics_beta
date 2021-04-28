@@ -31,9 +31,12 @@ class SearchController extends Controller
 
     	$comics = Comic::whereHas('comicGenre', function (Builder $query) use ($genres) {
     		if ($genres != '') {
-	    		$query->whereIn('comic_id', explode(',', $genres));
+	    		$query->whereIn('genre_id', explode(',', $genres));
 	    	}
-    	})->where('type', $type)->where('title', 'like', '%'.$title.'%')->get();
+    	})
+    			->where('type', $type)
+    			->where('title', 'like', '%'.$title.'%')
+    			->get();
 
     	// dd($comics);
 
@@ -43,8 +46,8 @@ class SearchController extends Controller
     protected function filter(Request $request)
     {
 
-    	$type = $request->input('type');
-    	$title = $request->input('title');
+    	$type = $request->input('type') == null ? '*' : $request->input('type');
+    	$title = $request->input('title') == null ? '*' : $request->input('title');
     	$genre = $request->input('genre');
     	$genres = '';
     	$i = 1;

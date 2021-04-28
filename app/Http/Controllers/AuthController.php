@@ -25,11 +25,16 @@ class AuthController extends Controller
         if (Auth::guard()->attempt($credentials)) {
             $request->session()->regenerate();
 
+            if (Auth::user()->role == 'admin') {
+                
+                return redirect()->route('admin.dashboard');
+            }
+
             return redirect()->intended('/');
         }
 
         return back()->withErrors([
-            'username' => 'Username atau Password salah.',
+            'username' => 'Username or Password incorrect.',
         ]);
     }
 
@@ -59,6 +64,6 @@ class AuthController extends Controller
 
     protected function logout()
     {
-    	return redirect('/')->with(Auth::logout());
+    	return redirect()->route('login')->with(Auth::logout());
     }
 }

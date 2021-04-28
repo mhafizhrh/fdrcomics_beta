@@ -17,81 +17,13 @@ class ChapterController extends Controller
 	protected function read($chapter_id)
 	{
 		$chapter = Chapter::find($chapter_id);
-        $chapters = Chapter::where('language', $chapter->language)
-                ->where('comic_id', $chapter->comic_id)
+        $chapters = Chapter::where('comic_id', $chapter->comic_id)
                 ->orderByRaw('created_at DESC, chapter DESC')->get();
 
         // dd($chapters);
 
         // $comic = Comic::find($chapter->comic->id);
 
-        abort_if(!$chapter, 404);
-
-        //////////////////////////////////////////////////////////
-        //////////////////////////////////////////////////////////
-		$exists = VisitorCount::where('chapter_id', $chapter->id)
-    		->whereDate('created_at', date('Y-m-d'))
-    		->count();
-    	if ($exists >= 1) {
-    		
-    		VisitorCount::where('chapter_id', $chapter->id)
-    			->whereDate('created_at', date('Y-m-d'))
-    			->update(['count' => DB::raw('count+1')]);
-    	} else {
-
-    		$visitorCount = new VisitorCount;
-    		$visitorCount->chapter_id = $chapter->id;
-    		$visitorCount->count = 1;
-    		$visitorCount->save();
-    	}
-
-        if (Auth::check()) {
-
-            $tenRowReadHistory = ReadingHistory::where('user_id', Auth::user()->id)
-                    ->orderBy('created_at', 'ASC')
-                    ->limit(10)
-                    ->get();
-
-            $checkReadHistory = ReadingHistory::where('user_id', Auth::user()->id)
-                    ->where('chapter_id', $chapter_id)
-                    ->first();
-
-            // dd($chapter->comic->chapter);
-
-            if ($checkReadHistory) {
-
-                foreach ($tenRowReadHistory as $key) {
-                    
-                    if ($checkReadHistory->chapter->comic_id == $key->chapter->comic_id) {
-                    ReadingHistory::where('chapter_id', $key->chapter_id)
-                            ->where('user_id', Auth::user()->id)
-                            ->delete();  
-                    }
-                }
-            } else {
-
-                foreach ($chapter->comic->chapter as $key) {
-
-                    ReadingHistory::where('chapter_id', $key->id)
-                            ->where('user_id', Auth::user()->id)
-                            ->delete();
-                }
-            }
-
-            if(count($tenRowReadHistory) >= 10) {
-
-                ReadingHistory::where('chapter_id', $tenRowReadHistory->first()->chapter_id)
-                        ->where('user_id', Auth::user()->id)
-                        ->delete();
-            }
-
-
-
-            $readingHistory = new ReadingHistory();
-            $readingHistory->chapter_id = $chapter_id;
-            $readingHistory->user_id = Auth::user()->id;
-            $readingHistory->save();
-        }
 
         //////////////////////////////////////////////////////////
         //////////////////////////////////////////////////////////

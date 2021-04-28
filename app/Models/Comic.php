@@ -11,6 +11,21 @@ class Comic extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function authors()
+    {
+        return $this->hasOne(Author::class, 'id', 'author_id');
+    }
+
+    public function languages()
+    {
+        return $this->hasOne(Language::class, 'id', 'language_id');
+    }
+
+    public function chapters()
+    {
+        return $this->hasMany(Chapter::class)->orderBy('chapter', 'DESC');
+    }
+
     public function chapterEachLang($language = null)
     {
         return $this->hasMany(Chapter::class)->where('language', $language)->orderByRaw('created_at DESC, chapter DESC');

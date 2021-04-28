@@ -15,17 +15,17 @@ class HomeController extends Controller
     protected function index(Request $request)
     {
 
-    	$from_date = date('Y-m-d', strtotime('-1 week')) . ' 00:00:00';
-    	$to_date = date('Y-m-d') . ' 23:59:59';
+    	// $from_date = date('Y-m-d', strtotime('-1 week')) . ' 00:00:00';
+    	// $to_date = date('Y-m-d') . ' 23:59:59';
 
-        $comics = Comic::all();
-        $popularChapter = VisitorCount::whereBetween('updated_at', [$from_date, $to_date])
-        		->orderBy('count', 'DESC')
-        		->limit(10)
-        		->get()
-        		->unique('chapter_id');
-        $genresUnique = Genre::orderBy('genre', 'ASC')->get()->unique('genre');
+     //    $comics = Comic::all();
+     //    $popularChapter = VisitorCount::whereBetween('updated_at', [$from_date, $to_date])
+     //    		->orderBy('count', 'DESC')
+     //    		->limit(10)
+     //    		->get()
+     //    		->unique('chapter_id');
+     //    $genresUnique = Genre::orderBy('genre', 'ASC')->get()->unique('genre');
 
-        return view('home', compact('comics', 'genresUnique', 'popularChapter'));
+        return view('admin.dashboard');
     }
 }

@@ -18,8 +18,7 @@ class CreateCommentsTable extends Migration
             $table->bigInteger('chapter_id');
             $table->bigInteger('user_id');
             $table->string('comment', 500);
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

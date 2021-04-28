@@ -20,4 +20,9 @@ class Genre extends Model
     {
     	return $this->hasMany(ComicGenre::class, 'genre_id');
     }
+
+    public function totalComics()
+    {
+        return $this->hasMany(ComicGenre::class, 'genre_id')->count();
+    }
 }

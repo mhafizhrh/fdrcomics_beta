@@ -14,10 +14,10 @@ class CreateComicGenresTable extends Migration
     public function up()
     {
         Schema::create('comic_genres', function (Blueprint $table) {
+            $table->id();
             $table->bigInteger('comic_id');
             $table->bigInteger('genre_id');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

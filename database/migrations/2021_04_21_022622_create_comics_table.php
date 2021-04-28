@@ -15,15 +15,13 @@ class CreateComicsTable extends Migration
     {
         Schema::create('comics', function (Blueprint $table) {
             $table->id();
-            $table->string('type', 100);
             $table->string('title', 200);
-            $table->string('author', 200);
-            $table->text('synopsis');
-            $table->bigInteger('rating');
-            $table->string('cover_img_url', 200);
-            $table->string('status', 40);
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->bigInteger('language_id');
+            $table->bigInteger('author_id');
+            $table->text('synopsis')->nullable();
+            $table->string('img_path', 200)->nullable();
+            $table->string('status', 40)->nullable();
+            $table->timestamps();
             $table->softDeletes();
         });
     }

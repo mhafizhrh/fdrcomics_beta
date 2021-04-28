@@ -29,7 +29,7 @@
 				    <span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse offcanvas-collapse" id="navbarNav">
-					<ul class="navbar-nav -ml-auto">
+					<ul class="navbar-nav ml-auto">
 						<li class="nav-item active"><a href="{{ route('home') }}" class="nav-link bg-dark">Home</a></li>
 						@if (Auth::check() && Auth::user()->level == 'admin')
 						<li class="nav-item"><a href="{{ route('comic.create') }}" class="nav-link bg-dark">New Comic</a></li>
@@ -55,14 +55,14 @@
 					        </div>
 					    </li>
 					</ul>
-					<form class="form-inline ml-auto">
+					<!-- <form class="form-inline ml-auto">
 					    <div class="input-group">
 					    	<input type="text" name="" class="form-control" placeholder="Search comic...">
 					    	<div class="input-group-append">
 					    		<button class="btn btn-sm btn-success"><i class="fa fa-search"></i></button>
 					    	</div>
 					    </div>
-					</form>
+					</form> -->
 				</div>
 		    <!-- </div> -->
 	  	</nav>

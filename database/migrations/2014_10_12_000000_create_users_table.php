@@ -20,10 +20,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('username', 200)->unique();
             $table->string('password', 200);
-            $table->enum('level', ['member', 'admin']);
+            $table->enum('role', ['reader', 'admin']);
             $table->rememberToken();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->timestamps();
             $table->softDeletes();
         });
     }
