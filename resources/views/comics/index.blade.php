@@ -52,24 +52,7 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-12 text-center">
-                                        <img src="{{ asset('storage/'.$comic->img_path) }}" class="img-thumbnail mb-2" style="max-height: 200px; object-fit: cover;">
-                                    </div>
-                                    <div class="col-md-12 text-center">
-                                        <div class="mx-auto">
-                                        <div class="input-group mx-auto">
-                                            <form>
-                                            <select name="rating" style="width: 100px">
-                                                <option value="">Rate</option>
-                                                @for ($i = 1; $i < 10; $i++)
-                                                <option>{{ $i }}</option>
-                                                @endfor
-                                            </select>
-                                            </form>
-                                            <div class="input-group-append">
-                                                <button class="btn btn-default">Rate</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <img src="{{ asset('storage/'.$comic->img_path) }}" class="img-thumbnail mb-2" style="max-width: 200px; object-fit: cover;">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -107,7 +90,7 @@
                                 <div class="row">
                                     <label class="col-md-4">Rating</label>
                                     <div class="col-md-8">
-                                       {{ round($comic->ratings()->rating, 2) }} (Rate by {{ $comic->ratings()->users }} participants)
+                                       {{ round($comic->ratings()->rating, 2) }} (Rated by {{ $comic->ratings()->users }} participants)
                                     </div>
                                 </div>
                                 <div class="row">
@@ -128,7 +111,7 @@
                             @foreach ($comic->chapters as $key)
                             <li class="list-group-item">
                                 <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
-                                <a href="#">Chapter {{ $key->chapter }}</a>
+                                <a href="{{ route('read', $key->id) }}">Chapter {{ $key->chapter }}</a>
                             </li>
                             @endforeach
                         </ul>

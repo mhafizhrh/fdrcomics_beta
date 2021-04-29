@@ -121,14 +121,29 @@ Route::middleware(['auth'])->group(function () {
 
 		// Chapters
 
-		Route::get('/admin/comic/chapters/{chapter_id}', [AdminChaptersController::class, 'new'])
-		->name('admin.comics.chapters');
-
 		Route::get('/admin/comics/{comic_id}/chapters/new', [AdminChaptersController::class, 'new'])
 		->name('admin.comics.chapters.new');
 
 		Route::post('/admin/comics/{comic_id}/chapters/store', [AdminChaptersController::class, 'store'])
 		->name('admin.comics.chapters.store');
+
+		Route::get('/admin/comics/chapters/{chapter_id}/edit', [AdminChaptersController::class, 'edit'])
+		->name('admin.comics.chapters.edit');
+
+		Route::put('/admin/comics/chapters/{chapter_id}/update', [AdminChaptersController::class, 'update'])
+		->name('admin.comics.chapters.update');
+
+		Route::delete('/admin/comics/chapters/{chapter_id}/delete', [AdminChaptersController::class, 'delete'])
+		->name('admin.comics.chapters.delete');
+
+		Route::post('/admin/comics/chapters/{chapter_id}/contents/store', [AdminChaptersController::class, 'storeContent'])
+		->name('admin.comics.chapters.contents.store');
+
+		Route::put('/admin/comics/chapters/{chapter_id}/contents/update', [AdminChaptersController::class, 'updateContent'])
+		->name('admin.comics.chapters.contents.update');
+
+		Route::get('/admin/comics/chapters/contents/{id}/delete', [AdminChaptersController::class, 'deleteContent'])
+		->name('admin.comics.chapters.contents.delete');
 
 		// Genres
 

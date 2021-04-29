@@ -22,7 +22,7 @@ class ReadController extends Controller
         $this->visitorCount($chapter_id);
         $this->readHistory($chapter_id);
 		
-		return view('chapter.read', compact('chapter', 'chapters', 'comments'));
+		return view('comics.chapters.read', compact('chapter', 'chapters', 'comments'));
 	}
 
 	protected function visitorCount($chapter_id)

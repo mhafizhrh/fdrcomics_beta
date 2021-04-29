@@ -94,7 +94,7 @@
 		                	@if (Auth::check())
 		                    <p class="d-block">{{ Auth::user()->username }}</p>
 		                    @else
-		                    <a href="{{ route('login') }}" class="d-block"><i class="fas fa-lock"></i> Login</a>
+		                    <a href="{{ route('login') }}" class="d-block"><i class="fas fa-sign-in-alt"></i> Login</a>
 		                    @endif
 		                </div>
 		            </div>
@@ -148,9 +148,17 @@
 		                    @else
 		                    <li class="nav-item">
 		                    	<a href="{{ route('login') }}" class="nav-link">
-		                    		<i class="nav-icon fas fa-lock"></i>
+		                    		<i class="nav-icon fas fa-sign-in-alt"></i>
 		                    		<p>
 		                    			Login
+		                    		</p>
+		                    	</a>
+		                    </li>
+		                    <li class="nav-item">
+		                    	<a href="{{ route('register') }}" class="nav-link">
+		                    		<i class="nav-icon fas fa-user-plus"></i>
+		                    		<p>
+		                    			Register
 		                    		</p>
 		                    	</a>
 		                    </li>

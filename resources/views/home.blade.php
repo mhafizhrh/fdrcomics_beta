@@ -43,6 +43,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <ol>
+                                @foreach ($visitors as $key)
+                                <li>{{ $key->chapter->comic->distinct('2')->first()->title }}</li>
+                                @endforeach
+                            </ol>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

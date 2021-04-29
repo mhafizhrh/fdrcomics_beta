@@ -46,6 +46,7 @@
                                         <td>
                                             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cogs"></i></button>
                                             <div class="dropdown-menu">
+                                                <a href="{{ route('admin.comics.chapters.new', $key->id) }}" class="dropdown-item">New Chapter</a>
                                                 <a href="{{ route('admin.comics.edit', $key->id) }}" class="dropdown-item">Edit</a>
                                                 <a href="#" class="dropdown-item">Delete</a>
                                             </div>

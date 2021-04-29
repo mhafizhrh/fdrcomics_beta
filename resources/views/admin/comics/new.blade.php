@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ route('admin.comics') }}" class="btn btn-default mb-1"><i class="fa fa-pencil-alt"></i> Comics</a>
+                    <a href="{{ route('admin.comics') }}" class="btn btn-default mb-1"><i class="fa fa-arrow-left"></i> Comics</a>
                 </div>
                 <div class="col-md-12">
                     @if ($errors->any())

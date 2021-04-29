@@ -290,7 +290,51 @@
         <script src="{{ asset('storage') }}/AdminLTE/dist/js/demo.js"></script>
         <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script>
+        	$('.confirm-delete').on('click', function(e){
+				e.preventDefault();
+				Swal.fire({
+				    title: 'Are you sure?',
+				    text: "You won't be able to revert this!",
+				    icon: 'warning',
+				    showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				    cancelButtonColor: '#d33',
+				    confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+				    if (result.value) {
+				       
+				       $(this).parents('form').submit();
+				    } else {
+
+				    	return false;
+				    }
+				})
+			})
+
+			$('.confirm-delete-anchor').on('click', function(e){
+				e.preventDefault();
+				Swal.fire({
+				    title: 'Are you sure?',
+				    text: "You won't be able to revert this!",
+				    icon: 'warning',
+				    showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				    cancelButtonColor: '#d33',
+				    confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+				    if (result.value) {
+				       
+				       window.location.href = $(this)[0].href;
+				       console.log($(this)[0].href);
+				    } else {
+
+				    	return false;
+				    }
+				})
+			})
+
         	$(document).ready(function() {
 			    $('#datatables').DataTable();
 			} );

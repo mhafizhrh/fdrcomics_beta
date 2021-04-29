@@ -14,7 +14,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="{{ route('admin.comics.new') }}" class="btn btn-default mb-1"><i class="fa fa-plus-square"></i> New Comic</a>
+                    <a href="{{ route('admin.comics.edit', $comic->id) }}" class="btn btn-default mb-1"><i class="fa fa-arrow-left"></i> Back</a>
                 </div>
                 <div class="col-md-12">
                     @if ($errors->any())
@@ -87,24 +87,6 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Chapters</h3>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                @foreach ($comic->chapters as $key)
-                                <li class="list-group-item">
-                                    <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
-                                    <a href="#">Chapter {{ $key->chapter }}</a>
-                                </li>
-                                @endforeach
-
-                            </ul>
                         </div>
                     </div>
                 </div>

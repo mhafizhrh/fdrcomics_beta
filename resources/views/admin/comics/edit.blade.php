@@ -14,6 +14,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
+                    <a href="{{ route('admin.comics') }}" class="btn btn-default mb-1"><i class="fa fa-arrow-left"></i> Back</a>
                     <a href="{{ route('admin.comics.new') }}" class="btn btn-default mb-1"><i class="fa fa-plus-square"></i> New Comic</a>
                     <a href="{{ route('admin.comics.chapters.new', $comic->id) }}" class="btn btn-default mb-1"><i class="fa fa-plus-square"></i> New Chapter</a>
                 </div>
@@ -120,7 +121,7 @@
                                 @foreach ($comic->chapters as $key)
                                 <li class="list-group-item">
                                     <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
-                                    <a href="#">Chapter {{ $key->chapter }}</a>
+                                    <a href="{{ route('admin.comics.chapters.edit', $key->id) }}">Chapter {{ $key->chapter }}</a>
                                 </li>
                                 @endforeach
 

@@ -34,6 +34,7 @@ class AdminComicsController extends Controller
             'title' => 'required',
             'author_id' => 'required|numeric',
             'language_id' => 'required|numeric',
+            'img_path' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
 
         $img_path = $request->file('img_path') == null ? 'images/sancomics_cover.png' : $request->file('img_path');
@@ -75,15 +76,13 @@ class AdminComicsController extends Controller
             'title' => 'required',
             'author_id' => 'required|numeric',
             'language_id' => 'required|numeric',
+            'img_path' => 'image|mimes:jpeg,png,jpg,gif,svg'
         ]);
-
-        $img_path = $request->file('img_path') == null ? 'images/sancomics_cover.png' : $request->file('img_path');
 
         $comic = Comic::find($comic_id);
         $comic->title = $request->input('title');
         $comic->author_id = $request->input('author_id');
         $comic->language_id = $request->input('language_id');
-        $comic->img_path = $img_path;
 
         if ($request->hasFile('img_path')) {
 
