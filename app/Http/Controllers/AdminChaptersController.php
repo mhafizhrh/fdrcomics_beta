@@ -57,6 +57,8 @@ class AdminChaptersController extends Controller
 
         }
 
+        $comic->touch();
+
         return redirect()->route('admin.comics.chapters.edit', $chapter->id);
     }
 
@@ -99,10 +101,12 @@ class AdminChaptersController extends Controller
         ]);
 
         $chapter = Chapter::find($chapter_id);
+        $comic = Comic::find($chapter->comic->id);
 
         if ($request->hasFile('img_path')) {
 
-            $i = $chapter->chapterContent->max('img_order') == null ? count($request->file('img_path')) : $chapter->chapterContent->max('img_order') + count($request->file('img_path'));
+            $i = $chapter->chapterContent->max('img_order') == null ? 1 : $chapter->chapterContent->max('img_order');
+            // $i = 1;
 
             foreach ($request->file('img_path') as $key) {
 
@@ -115,10 +119,13 @@ class AdminChaptersController extends Controller
                 $chapterContent = new ChapterContent();
                 $chapterContent->chapter_id = $chapter->id;
                 $chapterContent->img_path = $path;
-                $chapterContent->img_order = $i--;
+                $chapterContent->img_order = $i++;
                 $chapterContent->save();
             }
         }
+
+        $chapter->touch();
+        $comic->touch();
 
         return redirect()->route('admin.comics.chapters.edit', $chapter_id)->with('success', 'Image has been uploaded.');
     }

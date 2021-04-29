@@ -91,13 +91,6 @@
                         <div class="card-body">
                             <form method="post" action="{{ route('admin.comics.chapters.contents.store', $chapter->id) }}" enctype="multipart/form-data">
                                 @csrf
-                                <div class="alert alert-info mb-2">
-                                    <i class="fa fa-info-circle"></i> Information
-                                    <ul>
-                                        <li>Drag to reorder file.</li>
-                                        <li>Click/Tap List to view image</li>
-                                    </ul>
-                                </div>
                                 <div class="form-group row">
                                     <label class="col-md-4">Upload Files</label>
                                     <div class="col-md-8">
@@ -116,13 +109,20 @@
                             </form>
                             <hr class="bg-light">
                             <form method="post" action="{{ route('admin.comics.chapters.contents.update', $chapter->id) }}">
+                                <div class="alert alert-info mb-2">
+                                    <i class="fa fa-info-circle"></i> Information
+                                    <ul>
+                                        <li>Drag to reorder file.</li>
+                                        <li>Click/Tap List to view image</li>
+                                    </ul>
+                                </div>
                                 @csrf
                                 @method('put')
                                 <div class="form-group">
-                                    <div class="list-group" id="fileSortable">
+                                    <div class="list-group" id="fileSortable" style="max-height: 500px; overflow: auto">
                                         @foreach ($chapter->chapterContent as $key)
-                                        <div class="list-group-item" style="cursor: move;">
-                                            <i class="fas fa-arrows-alt"></i>
+                                        <div class="list-group-item">
+                                            <span class="fas fa-arrows-alt handle" style="cursor: pointer;"></span>
                                             {{ explode('/', $key->img_path)[count(explode('/', $key->img_path)) - 1] }}
                                             <a href="{{ route('admin.comics.chapters.contents.delete', $key->id) }}" class="btn btn-danger float-right btn-sm confirm-delete-anchor"><i class="fas fa-trash"></i></a>
                                             <button type="button" class="btn btn-default btn-sm float-right mr-2" data-toggle="modal" data-target="#img-modal-{{ $loop->iteration }}"><i class="fas fa-eye"></i></button>
@@ -163,14 +163,14 @@
 <script type="text/javascript">
 
     Sortable.create(fileSortable, {
+        // handle: '.handle',
         swap: true,
-        swapClass: "bg-light",
-        animation: 150
+        swapClass: 'bg-light',
+        multiDrag:true,
+        selectedClass: 'bg-primary',
+        fallbackTolerance: 3,
+        animation: 150,
+        ghostClass: 'bg-primary'
     })
-
-    $(".sortable").sortable({
-        items: '> :not(.modal-img)'
-    });
-    $(".sortable").disableSelection();
 </script>
 @endsection

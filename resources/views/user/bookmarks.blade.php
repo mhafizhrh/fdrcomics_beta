@@ -27,7 +27,7 @@
     					<div class="row">
 	    					@foreach ($bookmarks as $key)
 							<div class="col-lg-2 col-md-2 col-sm-6 col-6">
-								<div class="card bg-dark border-light text-center text-white mb-2">
+								<div class="card text-center mb-2">
 									<img src="{{ asset('storage/'.$key->comic->img_path) }}" class="card-img-top" style="max-height: 200px; object-fit: cover;">
 									<div class="card-body px-2 py-2">
 										<a href="{{ route('comics', $key->comic->id) }}" class="two-line-text">{{ $key->comic->title }}</a>

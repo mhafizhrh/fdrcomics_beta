@@ -15,4 +15,9 @@ class Visitor extends Model
     {
     	return $this->belongsTo(Chapter::class, 'chapter_id', 'id');
     }
+
+    public function popularComics()
+    {
+    	return $this->hasMany(Chapter::class);
+    }
 }

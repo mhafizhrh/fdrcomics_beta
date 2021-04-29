@@ -28,7 +28,7 @@ class Comic extends Model
     
     public function chapters()
     {
-        return $this->hasMany(Chapter::class)->orderBy('chapter', 'DESC');
+        return $this->hasMany(Chapter::class)->orderBy('updated_at', 'DESC');
     }
 
     public function chapterEachLang($language = null)

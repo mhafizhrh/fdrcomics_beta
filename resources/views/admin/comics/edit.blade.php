@@ -120,8 +120,9 @@
                             <ul class="list-group">
                                 @foreach ($comic->chapters as $key)
                                 <li class="list-group-item">
-                                    <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
-                                    <a href="{{ route('admin.comics.chapters.edit', $key->id) }}">Chapter {{ $key->chapter }}</a>
+                                    <a href="{{ route('read', $key->id) }}" class="btn btn-default btn-sm float-right ml-1"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('admin.comics.chapters.edit', $key->id) }}" class="btn btn-default btn-sm float-right ml-1"><i class="fas fa-edit"></i></a>
+                                    Chapter {{ $key->chapter }}
                                 </li>
                                 @endforeach
 

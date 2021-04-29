@@ -57,7 +57,8 @@ class AuthController extends Controller
             'email' => $request->input('email'),
             'username' => $request->input('username'),
             'password' => password_hash($request->input('password'), PASSWORD_DEFAULT),
-            'img_path' => 'image/sancomics_over.png'
+            'img_path' => 'image/sancomics_over.png',
+            'role' => 'reader'
         ]);
 
         return redirect(route('login'))->with('status', 'Register success. Please Login.');

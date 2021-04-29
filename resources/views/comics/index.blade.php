@@ -106,8 +106,12 @@
             </div>
             <div class="col-md-4">
                 <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Chapters</h3>
+                    </div>
                     <div class="card-body">
-                        <ul class="list-group">
+                        <input type="text" id="keyword" placeholder="Search chapter..." class="form-control mb-2">
+                        <ul class="list-group" id="chapter-list">
                             @foreach ($comic->chapters as $key)
                             <li class="list-group-item">
                                 <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
@@ -121,4 +125,16 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('storage') }}/AdminLTE/plugins/jquery/jquery.min.js"></script>
+<script src="{{ asset('storage') }}/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("#keyword").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#chapter-list li").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
 @endsection
