@@ -52,7 +52,7 @@
                                         <ul class="list-unstyled">
                                             @foreach ($key->chapters as $key)
                                             <li>
-                                                <a href="{{ route('read', $key->id) }}">Chapter {{ $key->chapter }}</a>
+                                                <a href="{{ route('read', $key->id) }}">[{{ Str::upper($key->languages->code) }}] Chapter {{ $key->chapter }}</a>
                                                 <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
                                             </li>
                                             @endforeach

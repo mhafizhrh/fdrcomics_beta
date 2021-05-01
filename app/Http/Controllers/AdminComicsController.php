@@ -29,7 +29,7 @@ class AdminComicsController extends Controller
 
     protected function store(Request $request)
     {
-        dd($request->file());
+        // dd($request->file());
         $request->validate([
             'title' => 'required',
             'author_id' => 'required|numeric',

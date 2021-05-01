@@ -40,7 +40,7 @@
                                 <ul class="list-unstyled">
                                     @foreach ($key->chapters as $key)
                                     <li>
-                                        <a href="{{ route('read', $key->id) }}">Chapter {{ $key->chapter }}</a>
+                                        <a href="{{ route('read', $key->id) }}">[{{ Str::upper($key->languages->code) }}] Chapter {{ $key->chapter }}</a>
                                         <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
                                     </li>
                                     @endforeach
@@ -70,7 +70,7 @@
                                         <img src="{{ asset('storage/'. $key->chapter->comic->img_path) }}" class="mr-3" style="width: 64px; height: 64px; object-fit: cover;">
                                         <div class="media-body">
                                             <h6 class="mt-0 mb-1 text-row-2"><a href="{{ route('comics', $key->chapter->comic->id) }}">{{ $key->chapter->comic->title }}</a></h6>
-                                            <a href="{{ route('read', $key->chapter->id) }}">Chapter {{ $key->chapter->chapter }}</a>
+                                            <a href="{{ route('read', $key->chapter->id) }}">[{{ Str::upper($key->chapter->languages->code) }}] Chapter {{ $key->chapter->chapter }}</a>
                                             <span class="float-right"><i class="fas fa-eye"></i> {{ number_format($key->visitedCount, 0, ',', '.') }}</span>
                                         </div>
                                     </li>

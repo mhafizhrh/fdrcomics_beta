@@ -11,6 +11,11 @@ class Chapter extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function languages()
+    {
+        return $this->hasOne(Language::class, 'id', 'language_id');
+    }
+
     public function comic()
     {
     	return $this->belongsTo(Comic::class, 'comic_id', 'id');

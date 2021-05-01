@@ -19,12 +19,20 @@
     </div>
     <div class="content">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
+                        <form method="post" action="{{ route('comics.bookmark', $comic->id) }}" class="float-left">
+                            @csrf
+                            @if ($bookmark)
+                            <button class="btn btn-primary"><i class="fas fa-check"></i> Bookmarked</button>
+                            @else
+                            <button class="btn btn-info"><i class="fas fa-book"></i> Bookmark</button>
+                            @endif
+                        </form>
                         <form method="post" action="{{ route('comics.rating', $comic->id) }}">
                             @csrf
-                            <div class="input-group w-50 float-right">
+                            <div class="input-group float-left col-md-2 col-sm-4 col-6">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Rating</span>
                                 </div>
@@ -38,64 +46,58 @@
                                 </select>
                             </div>
                         </form>
-                        <form method="post" action="{{ route('comics.bookmark', $comic->id) }}">
-                            @csrf
-                            @if ($bookmark)
-                            <button class="btn btn-primary"><i class="fas fa-check"></i> Bookmarked</button>
-                            @else
-                            <button class="btn btn-info"><i class="fas fa-book"></i> Bookmark</button>
-                            @endif
-                        </form>
                     </div>
                     <div class="card-body">
                         <div class="row justify-content-center">
-                            <div class="col-md-12">
+                            <div class="col-md-3">
                                 <div class="row">
                                     <div class="col-md-12 text-center">
                                         <img src="{{ asset('storage/'.$comic->img_path) }}" class="img-thumbnail mb-2" style="max-width: 200px; object-fit: cover;">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-9">
                                 <div class="row">
-                                    <label class="col-md-4">Title</label>
-                                    <div class="col-md-8">
+                                    <label class="col-md-3">Title</label>
+                                    <div class="col-md-9">
                                         {{ $comic->title }}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-4">Author</label>
-                                    <div class="col-md-8">
+                                    <label class="col-md-3">Author</label>
+                                    <div class="col-md-9">
                                         {{ $comic->authors->name }}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-4">Language</label>
-                                    <div class="col-md-8">
+                                    <label class="col-md-3">Language</label>
+                                    <div class="col-md-9">
                                         {{ $comic->languages->language }}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-4">Genre</label>
-                                    <div class="col-md-8">
+                                    <label class="col-md-3">Genre</label>
+                                    <div class="col-md-9">
                                         @foreach ($comic->comicGenre as $key)
-                                        <a href="#" class="badge badge-info">{{ $key->genre->name }}</a>
+                                        <a href="{{ route('search', ['genres[]' => $key->genre_id]) }}" class="badge badge-info">{{ $key->genre->name }}</a>
                                         @endforeach
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-4">Status</label>
-                                    <div class="col-md-8">
+                                    <label class="col-md-3">Status</label>
+                                    <div class="col-md-9">
                                        {{ $comic->status }}
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-4">Rating</label>
-                                    <div class="col-md-8">
+                                    <label class="col-md-3">Rating</label>
+                                    <div class="col-md-9">
                                        {{ round($comic->ratings()->rating, 2) }} (Rated by {{ $comic->ratings()->users }} participants)
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-4">Synopsis</label>
-                                    <div class="col-md-8" style="max-height: 500px; overflow-y: auto;">
+                                    <label class="col-md-3">Synopsis</label>
+                                    <div class="col-md-9" style="max-height: 500px; overflow-y: auto;">
                                         {!! $comic->synopsis !!}
                                     </div>
                                 </div>
@@ -104,7 +106,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Chapters</h3>
@@ -115,7 +117,7 @@
                             @foreach ($comic->chapters as $key)
                             <li class="list-group-item">
                                 <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
-                                <a href="{{ route('read', $key->id) }}">Chapter {{ $key->chapter }}</a>
+                                <a href="{{ route('read', $key->id) }}">[{{ Str::upper($key->languages->code) }}] Chapter {{ $key->chapter }}</a>
                             </li>
                             @endforeach
                         </ul>
