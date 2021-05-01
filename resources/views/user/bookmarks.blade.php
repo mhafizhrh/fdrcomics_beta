@@ -26,15 +26,28 @@
     				<div class="card-body">
     					<div class="row">
 	    					@foreach ($bookmarks as $key)
-							<div class="col-lg-2 col-md-2 col-sm-6 col-6">
-								<div class="card text-center mb-2">
-									<img src="{{ asset('storage/'.$key->comic->img_path) }}" class="card-img-top" style="max-height: 200px; object-fit: cover;">
-									<div class="card-body px-2 py-2">
-										<a href="{{ route('comics', $key->comic->id) }}" class="two-line-text">{{ $key->comic->title }}</a>
-									</div>
-								</div>
-							</div>
+                            <div class="col-md-4 mb-2">
+                                <form method="post" action="{{ route('comics.bookmark', $key->comic->id) }}">
+                                    @csrf
+                                    <button class="btn btn-danger btn-sm float-right confirm-delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                                <h5 class="mt-0"><a href="{{ route('comics', $key->comic->id) }}">{{ $key->comic->title }}</a></h5>
+                                <img src="@if ($key->comic->img_path) {{ asset('storage/'.$key->comic->img_path) }} @else {{ asset('storage/images/sancomics_cover.png') }} @endif" width="100" class="img-thumbnail float-left mr-2">
+                                <ul class="list-unstyled">
+                                    @foreach ($key->comic->chapters as $key)
+                                    <li>
+                                        <a href="{{ route('read', $key->comic->id) }}">Chapter {{ $key->chapter }}</a>
+                                        <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
 							@endforeach
+                            <div class="col-md-12">
+                                {{ $bookmarks->links() }}
+                            </div>
 						</div>
     				</div>
     			</div>

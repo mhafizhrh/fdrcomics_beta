@@ -6,41 +6,55 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use App\Models\Comic;
 use App\Models\Genre;
-use App\Models\VisitorCount;
+use App\Models\Bookmark;
+use App\Models\Visitor;
 
 class SearchController extends Controller
 {
-    protected function search($title, $type, $genres)
+    protected function search(Request $request)
     {
+        $genres = $request->genres == null ? [] : $request->genres;
+        $title = $request->title;
 
-    	if ($title == '*') { $title = ''; }
-    	if ($type == '*') { $type = ''; }
-    	if ($genres == '*') { $genres = ''; }
+        $comics = $this->search_comics($title, $genres);
 
-    	$from_date = date('Y-m-d', strtotime('-1 week')) . ' 00:00:00';
-    	$to_date = date('Y-m-d') . ' 23:59:59';
+        $oneWeekAgo = date('Y-m-d 00:00:00', strtotime('-1 week'));
+        $currentDate = date('Y-m-d 23:59:59');
 
-    	$popularChapter = VisitorCount::whereBetween('updated_at', [$from_date, $to_date])
-        		->orderBy('count', 'DESC')
-        		->limit(10)
-        		->get()
-        		->unique('chapter_id');
+        $weeklyPopularChapters = Visitor::whereBetween('updated_at', [$oneWeekAgo, $currentDate])
+                ->selectRaw('chapter_id, SUM(count) AS visitedCount')
+                ->groupBy('chapter_id')
+                ->limit(10)
+                ->get();
 
-        $genresUnique = Genre::orderBy('genre', 'ASC')->get()->unique('genre');
+        $popularComics = Bookmark::selectRaw('comic_id, COUNT(*) AS userBookmarks')
+                ->groupBy('comic_id')
+                ->limit(10)
+                ->get();
 
+        $genres = Genre::all();
 
-    	$comics = Comic::whereHas('comicGenre', function (Builder $query) use ($genres) {
-    		if ($genres != '') {
-	    		$query->whereIn('genre_id', explode(',', $genres));
-	    	}
-    	})
-    			->where('type', $type)
-    			->where('title', 'like', '%'.$title.'%')
-    			->get();
+        return view('search', compact('comics', 'weeklyPopularChapters', 'popularComics', 'genres', 'request'));
+    }
 
-    	// dd($comics);
+    protected function search_comics($title = null, $genres = null)
+    {
+        $comics = Comic::select('comics.*');
+        $comics->join('comic_genres', 'comics.id', '=', 'comic_genres.comic_id');
+        foreach ($genres as $key) {
+            $comics->whereExists(function ($query) use ($key) {
+                $query->from('comic_genres');
+                $query->whereColumn('comic_genres.comic_id', 'comics.id');
+                $query->where('comic_genres.genre_id', $key);
+            });
+        }
+        $comics->where('comics.title', 'like', '%' . $title . '%');
+        $comics->orderBy('comics.updated_at', 'DESC');
+        $comics->groupBy('comics.id', 'comics.title', 'comics.title', 'comics.author_id', 'comics.language_id', 'comics.synopsis', 'comics.img_path', 'comics.status', 'comics.created_at', 'comics.updated_at', 'comics.deleted_at');
+        $comics = $comics->paginate(20)
+                ->appends(['title' => $title, 'genres' => $genres]);
 
-    	return view('home', compact('comics', 'genresUnique', 'popularChapter'));
+        return $comics;
     }
 
     protected function filter(Request $request)

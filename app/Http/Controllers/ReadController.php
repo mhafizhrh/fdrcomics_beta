@@ -15,6 +15,9 @@ class ReadController extends Controller
     protected function index($chapter_id)
 	{
 		$chapter = Chapter::find($chapter_id);
+
+		abort_if(!$chapter, 404);
+		
         $chapters = Chapter::where('comic_id', $chapter->comic_id)
                 ->orderByRaw('created_at DESC, chapter DESC')->get();
         $comments = Comment::where('chapter_id', $chapter_id)->get();

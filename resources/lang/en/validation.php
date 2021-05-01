@@ -155,7 +155,11 @@ return [
         'email' => 'E-mail Address',
         'username' => 'Username',
         'password' => 'Password',
-        'password_confirmation' => 'Password Confirmation'
+        'password_confirmation' => 'Password confirmation',
+        'current_password' => 'Password',
+        'new_password' => 'New Password',
+        'new_password_confirmation' => 'New password confirmation',
+        'img_path' => 'File'
     ],
 
 ];

@@ -31,6 +31,7 @@ use App\Http\Controllers\SearchController;
 
 // Example
 
+Route::redirect('/admin', '/admin/dashboard');
 Route::redirect('/comic', '/');
 Route::redirect('/chapter', '/');
 Route::redirect('/read', '/');
@@ -62,7 +63,7 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/home', [HomeController::class, 'index'])
 ->name('home');
 
-Route::get('/search/title/{title}/type/{type}/genres/{genre}', [SearchController::class, 'search'])
+Route::get('/search', [SearchController::class, 'search'])
 ->name('search');
 
 Route::post('/search/filter', [SearchController::class, 'filter'])
@@ -91,8 +92,20 @@ Route::middleware(['auth'])->group(function () {
 		Route::get('/user/history', [UserController::class, 'history'])
 		->name('user.history');
 
+		Route::get('/user/settings', [UserController::class, 'settings'])
+		->name('user.settings');
+
+		Route::put('/user/settings/profile/update', [UserController::class, 'profileUpdate'])
+		->name('user.settings.profile.update');
+
+		Route::put('/user/settings/password/update', [UserController::class, 'passwordUpdate'])
+		->name('user.settings.password.update');
+
 		Route::post('/comment/{chapter_id}', [CommentController::class, 'store'])
 		->name('comment.store');
+
+		Route::delete('/comment/{id}/delete', [CommentController::class, 'delete'])
+		->name('comment.delete');
 	});
 
 	Route::middleware(['role:admin'])->group(function () {

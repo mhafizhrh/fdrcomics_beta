@@ -18,6 +18,9 @@ class ComicController extends Controller
 	protected function index($comic_id)
 	{
 		$comic = Comic::find($comic_id);
+
+        abort_if(!$comic, 404);
+
         if (Auth::check()) {
             $bookmark = Bookmark::where('comic_id', $comic_id)
                     ->where('user_id', Auth::user()->id)
@@ -53,7 +56,7 @@ class ComicController extends Controller
                 ->delete();
         }
 
-        return redirect()->route('comics', $comic_id);
+        return redirect()->back();
     }
 
     protected function rating(Request $request, $comic_id)

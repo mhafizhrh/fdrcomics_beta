@@ -7,11 +7,11 @@
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="{{ asset('storage') }}/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
         <!-- summernote -->
-  		<link rel="stylesheet" href="{{ asset('storage') }}/AdminLTE/plugins/summernote/summernote-bs4.min.css">
+  		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css">
         <!-- Theme style -->
-        <link rel="stylesheet" href="{{ asset('storage') }}/AdminLTE/dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
     </head>
     <body class="hold-transition sidebar-mini layout-navbar-fixed dark-mode">
@@ -23,12 +23,12 @@
 		            <li class="nav-item">
 		                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 		            </li>
-		            <li class="nav-item d-none d-sm-inline-block">
+		            <!-- <li class="nav-item d-none d-sm-inline-block">
 		                <a href="index3.html" class="nav-link">Home</a>
 		            </li>
 		            <li class="nav-item d-none d-sm-inline-block">
 		                <a href="#" class="nav-link">Contact</a>
-		            </li>
+		            </li> -->
 		        </ul>
 		        <!-- Right navbar links -->
 		        <ul class="navbar-nav ml-auto">
@@ -63,7 +63,7 @@
 		                    <a href="#" class="dropdown-item">
 		                        <!-- Message Start -->
 		                        <div class="media">
-		                            <img src="{{ asset('storage') }}/AdminLTE/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+		                            <img src="{{ asset('storage/'. Auth::user()->img_path) }}" alt="User Avatar" class="img-size-50 mr-3 img-circle">
 		                            <div class="media-body">
 		                                <h3 class="dropdown-item-title">
 		                                    Brad Diesel
@@ -79,7 +79,7 @@
 		                    <a href="#" class="dropdown-item">
 		                        <!-- Message Start -->
 		                        <div class="media">
-		                            <img src="{{ asset('storage') }}/AdminLTE/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+		                            <img src="{{ asset('storage/'. Auth::user()->img_path) }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
 		                            <div class="media-body">
 		                                <h3 class="dropdown-item-title">
 		                                    John Pierce
@@ -95,7 +95,7 @@
 		                    <a href="#" class="dropdown-item">
 		                        <!-- Message Start -->
 		                        <div class="media">
-		                            <img src="{{ asset('storage') }}/AdminLTE/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+		                            <img src="{{ asset('storage/'. Auth::user()->img_path) }}" alt="User Avatar" class="img-size-50 img-circle mr-3">
 		                            <div class="media-body">
 		                                <h3 class="dropdown-item-title">
 		                                    Nora Silvester
@@ -155,7 +155,7 @@
 		    <aside class="main-sidebar sidebar-dark-primary elevation-4">
 		        <!-- Brand Logo -->
 		        <a href="index3.html" class="brand-link">
-		        <img src="{{ asset('storage') }}/AdminLTE/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+		        <img src="{{ asset('storage/'. Auth::user()->img_path) }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8; min-width: 33px">
 		        <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
 		        </a>
 		        <!-- Sidebar -->
@@ -163,7 +163,7 @@
 		            <!-- Sidebar user panel (optional) -->
 		            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 		                <div class="image">
-		                    <img src="{{ asset('storage') }}/AdminLTE/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+		                    <img src="{{ asset('storage/'. Auth::user()->img_path) }}" class="img-circle elevation-2" alt="User Image" style="max-height: 33px;">
 		                </div>
 		                <div class="info">
 		                    <a href="#" class="d-block">{{ Auth::user()->name }}</a>
@@ -277,19 +277,19 @@
 		        <strong>Copyright &copy; 2021 <a href="https://sancomics.xyz">SANComics</a>.</strong> All rights reserved.
 		    </footer>
 		</div>
-        <!-- jQuery -->
-        <script src="{{ asset('storage') }}/AdminLTE/plugins/jquery/jquery.min.js"></script>
-        <!-- Bootstrap 4 -->
-        <script src="{{ asset('storage') }}/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="{{ asset('storage') }}/AdminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+		<!-- jQuery -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<!-- Bootstrap 4 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<!-- AdminLTE App -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js"></script>
         <!-- Summernote -->
-		<script src="{{ asset('storage') }}/AdminLTE/plugins/summernote/summernote-bs4.min.js"></script>
-        <!-- AdminLTE App -->
-        <script src="{{ asset('storage') }}/AdminLTE/dist/js/adminlte.min.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="{{ asset('storage') }}/AdminLTE/dist/js/demo.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+        
         <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.3.4/bs-custom-file-input.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
         <script>
         	$('.confirm-delete').on('click', function(e){

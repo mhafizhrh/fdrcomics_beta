@@ -22,6 +22,17 @@ class CommentController extends Controller
         $comment->comment = nl2br($request->input('comment'));
         $comment->save();
 
-        return redirect()->route('read', $chapter_id);
+        return redirect(route('read', $chapter_id) . '#comment-card');
+    }
+
+    protected function delete($id)
+    {
+        $comment = Comment::find($id);
+
+        abort_if(!$comment, 404);
+
+        $comment->delete();
+
+        return redirect(route('read', $comment->chapter_id) . '#comment-card');
     }
 }

@@ -11,9 +11,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!-- Google Font: Source Sans Pro -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 		<!-- Font Awesome Icons -->
-		<link rel="stylesheet" href="{{ asset('storage') }}/AdminLTE/plugins/fontawesome-free/css/all.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 		<!-- Theme style -->
-		<link rel="stylesheet" href="{{ asset('storage') }}/AdminLTE/dist/css/adminlte.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
+		<style>
+			.text-row-1 {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+			}
+
+			.text-row-2 {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+			}
+
+			.text-row-10 {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				display: -webkit-box;
+				-webkit-line-clamp: 10;
+				-webkit-box-orient: vertical;
+			}
+		</style>
 	</head>
 	<body class="hold-transition layout-top-nav">
 		<div class="wrapper">
@@ -52,8 +77,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<li class="nav-item dropdown text-dark">
 								<a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><i class="fas fa-user"></i> {{ Auth::user()->username }}</a>
 								<ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-									<li><a href="#" class="dropdown-item">Profile</a></li>
-									<li><a href="{{ route('logout') }}" class="dropdown-item">Logout</a></li>
+									<li><a href="{{ route('user.settings') }}" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a></li>
+									<li><a href="{{ route('logout') }}" class="dropdown-item"><i class="fas fa-power-off"></i> Logout</a></li>
 								</ul>
 							</li>
 							@else
@@ -72,9 +97,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							@endif
 						</ul>
 						<!-- SEARCH FORM -->
-						<form class="form-inline ml-0 ml-md-3">
+						<form class="form-inline ml-0 ml-md-3" method="get" action="{{ route('search') }}">
 							<div class="input-group input-group-sm">
-								<input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+								<input class="form-control" type="search" name="title" placeholder="Search" aria-label="Search">
 								<div class="input-group-append">
 									<button class="btn btn-navbar" type="submit">
 									<i class="fas fa-search"></i>
@@ -131,17 +156,65 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!-- ./wrapper -->
 		<!-- REQUIRED SCRIPTS -->
 		<!-- jQuery -->
-		<script src="{{ asset('storage') }}/AdminLTE/plugins/jquery/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 		<!-- Bootstrap 4 -->
-		<script src="{{ asset('storage') }}/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 		<!-- AdminLTE App -->
-		<script src="{{ asset('storage') }}/AdminLTE/dist/js/adminlte.min.js"></script>
-		<!-- AdminLTE for demo purposes -->
-		<script src="{{ asset('storage') }}/AdminLTE/dist/js/demo.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/js/adminlte.min.js"></script>
 		<!-- Bootstrap Switch -->
-		<script src="{{ asset('storage') }}/AdminLTE/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js"></script>
+		
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.3.4/bs-custom-file-input.min.js"></script>
 	</body>
 	<script>
+		$(function () {
+		  	bsCustomFileInput.init();
+		});
+
+		$('.confirm-delete').on('click', function(e){
+				e.preventDefault();
+				Swal.fire({
+				    title: 'Are you sure?',
+				    text: "You won't be able to revert this!",
+				    icon: 'warning',
+				    showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				    cancelButtonColor: '#d33',
+				    confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+				    if (result.value) {
+				       
+				       $(this).parents('form').submit();
+				    } else {
+
+				    	return false;
+				    }
+				})
+			})
+
+			$('.confirm-delete-anchor').on('click', function(e){
+				e.preventDefault();
+				Swal.fire({
+				    title: 'Are you sure?',
+				    text: "You won't be able to revert this!",
+				    icon: 'warning',
+				    showCancelButton: true,
+				    confirmButtonColor: '#3085d6',
+				    cancelButtonColor: '#d33',
+				    confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+				    if (result.value) {
+				       
+				       window.location.href = $(this)[0].href;
+				       console.log($(this)[0].href);
+				    } else {
+
+				    	return false;
+				    }
+				})
+			})
 		
 		$("#customSwitch3").change(function(){
 			if ($(this).prop('checked')) {

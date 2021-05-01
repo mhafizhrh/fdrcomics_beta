@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Comic extends Model
 {
@@ -29,6 +30,17 @@ class Comic extends Model
     public function chapters()
     {
         return $this->hasMany(Chapter::class)->orderBy('updated_at', 'DESC');
+    }
+
+    public function bookmark()
+    {
+        return $this->hasOne(Bookmark::class)->where('user_id', Auth::user()->id);
+    }
+
+    public function userBookmarks()
+    {
+        // return $this->belongsToMany(Comic::class, 'bookmarkss', 'comic_id', 'comic_id')->where('bookmarks.user_id', Auth::user()->id);
+        return $this->hasMany(Bookmark::class, 'comic_id')->where('user_id', Auth::user()->id);
     }
 
     public function chapterEachLang($language = null)

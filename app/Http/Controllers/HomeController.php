@@ -22,10 +22,12 @@ class HomeController extends Controller
         $currentDate = date('Y-m-d 23:59:59');
 
         $weeklyPopularChapters = Visitor::whereBetween('updated_at', [$oneWeekAgo, $currentDate])
-        		->selectRaw('*, SUM(count) AS visitedCount')
+        		->selectRaw('chapter_id, SUM(count) AS visitedCount')
         		->groupBy('chapter_id')
       			->limit(10)
       			->get();
+
+      	// dd($weeklyPopularChapters);
 
         // By Visitor
       	// $popularComics = Visitor::join('chapters', 'visitors.chapter_id', '=', 'chapters.id')
@@ -34,7 +36,7 @@ class HomeController extends Controller
       	// 		->groupBy('comics.id')
       	// 		->get();
 
-      	$popularComics = Bookmark::selectRaw('*, COUNT(*) AS userBookmarks')
+      	$popularComics = Bookmark::selectRaw('comic_id, COUNT(*) AS userBookmarks')
       			->groupBy('comic_id')
       			->limit(10)
       			->get();

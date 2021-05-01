@@ -1,5 +1,5 @@
 @extends('layout')
-@section('content.header')
+@section('content-header')
 <div class="content-header">
 	<div class="container-fluid">
 		<div class="row mb-2">
@@ -93,9 +93,16 @@
 									<div class="comment-text">
 										<span class="username">
 											{{ $key->user->name }}
+											@if (Auth::check() && Auth::user()->id === $key->user_id)
+											<form class="float-right" method="post" action="{{ route('comment.delete', $key->id) }}">
+												@csrf
+												@method('delete')
+												<button class="btn btn-link btn-sm py-0 my-0 confirm-delete"><i class="fas fa-times"></i></button>
+											</form>
+											@endif
 											<span class="text-muted float-right">{{ $key->created_at->diffForHumans() }}</span>
 										</span>
-										{{ $key->comment }}
+										<div class="text-row-10" onclick="toggleEllipsis()">{!! $key->comment !!}</div>
 									</div>
 									@endforeach
 								</div>
@@ -128,6 +135,7 @@
 </div>
 <script src="{{ asset('storage') }}/AdminLTE/plugins/jquery/jquery.min.js"></script>
 <script>
+
 $(document).ready(function(){
 	$(".btn-tool-comment").on('click', function(){
 		if (window.localStorage.getItem("comment") == "collapsed-card") {

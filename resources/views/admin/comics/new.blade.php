@@ -73,7 +73,7 @@
                                 <div class="form-group row">
                                     <label class="col-md-4">Synopsis</label>
                                     <div class="col-md-8">
-                                        <textarea class="form-control" name="synopsis" rows="7">{{ old('synopsis') }}</textarea>
+                                        <textarea class="form-control" name="synopsis" rows="7" id="summernote">{{ old('synopsis') }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
