@@ -20,7 +20,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         <ul class="nav nav-pills">
@@ -47,12 +47,17 @@
                                             </button>
                                             @endif
                                         </form>
-                                        <h5 class="mt-0 text-row-2"><a href="{{ route('comics', $key->id) }}">{{ $key->title }}</a></h5>
+                                        <h5 class="mt-0 text-row-2">
+                                            <a href="{{ route('comics', $key->id) }}">
+                                                <i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i>
+                                                {{ $key->title }}
+                                            </a>
+                                        </h5>
                                         <img src="@if ($key->img_path) {{ asset('storage/'.$key->img_path) }} @else {{ asset('storage/images/sancomics_cover.png') }} @endif" width="100" class="img-thumbnail float-left mr-2">
                                         <ul class="list-unstyled">
                                             @foreach ($key->chapters as $key)
                                             <li>
-                                                <a href="{{ route('read', $key->id) }}">[{{ Str::upper($key->languages->code) }}] Chapter {{ $key->chapter }}</a>
+                                                <a href="{{ route('read', $key->id) }}"><i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i> Chapter {{ $key->chapter }}</a>
                                                 <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
                                             </li>
                                             @endforeach
@@ -79,7 +84,7 @@
                                         <form method="get">
                                             <div class="form-group row">
                                                 <label class="col-md-4">Title</label>
-                                                <div class="col-md-8 row">
+                                                <div class="col-md-8">
                                                     <input type="text" name="title" class="form-control" value="{{ $request->title }}">
                                                 </div>
                                             </div>
@@ -95,56 +100,32 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label class="col-md-4">Main Language</label>
+                                                <div class="col-md-8 row">
+                                                    <!-- <input type="checkbox" name="genres[]" value="" hidden="" checked=""> -->
+                                                    <select class="form-control" name="language">
+                                                    @foreach ($languages as $key)
+                                                    <option value="{{ $key->id }}" @if ($key->id == $request->language) selected @endif>{{ $key->language }}</option>
+                                                    @endforeach
+                                                    </select>
+                                                    <div class="col-md-12">
+                                                        <p><i class="fa fa-info-circle"></i> Main language is the language that comes from raw.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-4">Only Bookmarks (Log In required)</label>
+                                                <div class="col-md-8">
+                                                    <input type="checkbox" name="bookmarks" value="yes" @if (! Auth::check()) disabled @endif @if ($request->bookmarks) checked @endif> Yes
+                                                    <p><i class="fa fa-info-circle"></i> Select <b>Yes</b> if you want search only the comics in your bookmarks.</p>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <button class="btn btn-default offset-md-4">Search</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Weekly Popular Chapter</h3>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    @foreach ($weeklyPopularChapters as $key)
-                                    <li class="media mb-2">
-                                        <img src="{{ asset('storage/'. $key->chapter->comic->img_path) }}" class="mr-3" style="width: 64px; height: 64px; object-fit: cover;">
-                                        <div class="media-body">
-                                            <h6 class="mt-0 mb-1 text-row-2"><a href="{{ route('comics', $key->chapter->comic->id) }}">{{ $key->chapter->comic->title }}</a></h6>
-                                            <a href="{{ route('read', $key->chapter->id) }}">Chapter {{ $key->chapter->chapter }}</a>
-                                            <span class="float-right"><i class="fas fa-eye"></i> {{ number_format($key->visitedCount, 0, ',', '.') }}</span>
-                                        </div>
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Popular Comics</h3>
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-unstyled">
-                                    @foreach ($popularComics as $key)
-                                    <li class="media mb-2">
-                                        <img src="{{ asset('storage/'. $key->comic->img_path) }}" class="mr-3" style="width: 64px; height: 64px; object-fit: cover;">
-                                        <div class="media-body">
-                                            <h6 class="mt-0 mb-1 two-line-text"><a href="{{ route('comics', $key->comic->id) }}">{{ $key->comic->title }}</a></h6>
-                                            <span><i class="fas fa-users"></i> {{ number_format($key->userBookmarks, 0, ',', '.') }}</span>
-                                        </div>
-                                    </li>
-                                    @endforeach
-                                </ul>
                             </div>
                         </div>
                     </div>

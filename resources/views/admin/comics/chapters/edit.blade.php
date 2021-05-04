@@ -15,6 +15,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <a href="{{ route('admin.comics.edit', $chapter->comic->id) }}" class="btn btn-default mb-1"><i class="fa fa-arrow-left"></i> Back</a>
+                    <a href="{{ route('admin.comics.chapters.new', $chapter->comic->id) }}" class="btn btn-default mb-1"><i class="fa fa-plus-square"></i> New Chapter</a>
                 </div>
                 <div class="col-md-12">
                     @if ($errors->any())
@@ -34,7 +35,7 @@
                             <form method="post" action="{{ route('admin.comics.chapters.delete', $chapter->id) }}">
                                 @csrf
                                 @method('delete')
-                                <button class="btn btn-danger float-right confirm-delete">Delete Chapter</button>
+                                <button class="btn btn-danger float-right confirm-delete"><i class="fa fa-trash"></i></button>
                             </form>
                             <h3 class="card-title">{{ $chapter->comic->title }} - Chapter {{ $chapter->chapter }}</h3>
                         </div>
@@ -59,7 +60,7 @@
                                     <div class="col-md-8">
                                         <select class="form-control" name="language_id" required="">
                                             @foreach ($languages as $key)
-                                            <option value="{{ $key->id }}" @if($key->id == $chapter->comic->language_id) selected @endif>{{ $key->language }}</option>
+                                            <option value="{{ $key->id }}" @if($key->id == $chapter->language_id) selected @endif>{{ $key->language }}</option>
                                             @endforeach
                                         </select>
                                     </div>

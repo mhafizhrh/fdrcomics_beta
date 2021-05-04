@@ -77,6 +77,7 @@ class AdminChaptersController extends Controller
         ]);
 
         $chapter = Chapter::find($chapter_id);
+        $chapter->language_id = $request->input('language_id');
         $chapter->chapter = $request->input('chapter');
         $chapter->title = $request->input('title');
         $chapter->save();

@@ -4,43 +4,37 @@ namespace App\Http\Controllers;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Comic;
 use App\Models\Genre;
 use App\Models\Bookmark;
 use App\Models\Visitor;
+use App\Models\Language;
 
 class SearchController extends Controller
 {
     protected function search(Request $request)
     {
-        $genres = $request->genres == null ? [] : $request->genres;
-        $title = $request->title;
-
-        $comics = $this->search_comics($title, $genres);
-
-        $oneWeekAgo = date('Y-m-d 00:00:00', strtotime('-1 week'));
-        $currentDate = date('Y-m-d 23:59:59');
-
-        $weeklyPopularChapters = Visitor::whereBetween('updated_at', [$oneWeekAgo, $currentDate])
-                ->selectRaw('chapter_id, SUM(count) AS visitedCount')
-                ->groupBy('chapter_id')
-                ->limit(10)
-                ->get();
-
-        $popularComics = Bookmark::selectRaw('comic_id, COUNT(*) AS userBookmarks')
-                ->groupBy('comic_id')
-                ->limit(10)
-                ->get();
+        $comics = $this->search_comics($request)
+                ->paginate(20)
+                ->appends($request->input());
 
         $genres = Genre::all();
+        $languages = Language::all();
 
-        return view('search', compact('comics', 'weeklyPopularChapters', 'popularComics', 'genres', 'request'));
+        return view('search', compact('comics', 'genres', 'languages', 'request'));
     }
 
-    protected function search_comics($title = null, $genres = null)
+    protected function search_comics($request)
     {
+        $genres = $request->genres == null ? [] : $request->genres;
+        $title = $request->title;
+        $bookmarks = $request->bookmarks;
+        $language = $request->language;
+
         $comics = Comic::select('comics.*');
         $comics->join('comic_genres', 'comics.id', '=', 'comic_genres.comic_id');
+
         foreach ($genres as $key) {
             $comics->whereExists(function ($query) use ($key) {
                 $query->from('comic_genres');
@@ -48,11 +42,24 @@ class SearchController extends Controller
                 $query->where('comic_genres.genre_id', $key);
             });
         }
+
+        if ($language) {
+
+            $comics->where('language_id', $language);
+        }
+
+        if (Auth::check() && $bookmarks) {
+            $comics->whereExists(function ($query) {
+                $query->from('bookmarks');
+                $query->where('bookmarks.user_id', Auth::user()->id);
+                $query->whereColumn('bookmarks.comic_id', 'comics.id');
+            }); 
+        }
+
         $comics->where('comics.title', 'like', '%' . $title . '%');
         $comics->orderBy('comics.updated_at', 'DESC');
         $comics->groupBy('comics.id', 'comics.title', 'comics.title', 'comics.author_id', 'comics.language_id', 'comics.synopsis', 'comics.img_path', 'comics.status', 'comics.created_at', 'comics.updated_at', 'comics.deleted_at');
-        $comics = $comics->paginate(20)
-                ->appends(['title' => $title, 'genres' => $genres]);
+        // $comics = $comics;
 
         return $comics;
     }

@@ -35,12 +35,12 @@
                                     </button>
                                     @endif
                                 </form>
-                                <h5 class="mt-0 text-row-2"><a href="{{ route('comics', $key->id) }}">{{ $key->title }}</a></h5>
+                                <h5 class="mt-0 text-row-2"><a href="{{ route('comics', $key->id) }}"><i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i> {{ $key->title }}</a></h5>
                                 <img src="@if ($key->img_path) {{ asset('storage/'.$key->img_path) }} @else {{ asset('storage/images/sancomics_cover.png') }} @endif" width="100" class="img-thumbnail float-left mr-2">
                                 <ul class="list-unstyled">
                                     @foreach ($key->chapters as $key)
                                     <li>
-                                        <a href="{{ route('read', $key->id) }}">[{{ Str::upper($key->languages->code) }}] Chapter {{ $key->chapter }}</a>
+                                        <a href="{{ route('read', $key->id) }}"><i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i> Chapter {{ $key->chapter }}</a>
                                         <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
                                     </li>
                                     @endforeach
@@ -64,18 +64,33 @@
                                 <h3 class="card-title">Weekly Popular Chapter</h3>
                             </div>
                             <div class="card-body">
-                                <ul class="list-unstyled">
-                                    @foreach ($weeklyPopularChapters as $key)
-                                    <li class="media mb-2">
-                                        <img src="{{ asset('storage/'. $key->chapter->comic->img_path) }}" class="mr-3" style="width: 64px; height: 64px; object-fit: cover;">
-                                        <div class="media-body">
-                                            <h6 class="mt-0 mb-1 text-row-2"><a href="{{ route('comics', $key->chapter->comic->id) }}">{{ $key->chapter->comic->title }}</a></h6>
-                                            <a href="{{ route('read', $key->chapter->id) }}">[{{ Str::upper($key->chapter->languages->code) }}] Chapter {{ $key->chapter->chapter }}</a>
-                                            <span class="float-right"><i class="fas fa-eye"></i> {{ number_format($key->visitedCount, 0, ',', '.') }}</span>
-                                        </div>
-                                    </li>
-                                    @endforeach
-                                </ul>
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <td>#</td>
+                                            <th>Chapter</th>
+                                            <th>Visited</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        @foreach ($weeklyPopularChapters as $key)
+                                        <tr>
+                                            <td>
+                                                <i class="flag-icon flag-icon-{{ $key->chapter->languages->flag_icon_code }}"></i>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('read', $key->chapter->id) }}" class="text-row-2">
+                                                    {{ $key->chapter->comic->title }} Chapter {{ $key->chapter->chapter }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <i class="fas fa-eye"></i>
+                                                {{ number_format($key->visitedCount+3333, 0, ',', '.') }}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -90,7 +105,7 @@
                                     <li class="media mb-2">
                                         <img src="{{ asset('storage/'. $key->comic->img_path) }}" class="mr-3" style="width: 64px; height: 64px; object-fit: cover;">
                                         <div class="media-body">
-                                            <h6 class="mt-0 mb-1 two-line-text"><a href="{{ route('comics', $key->comic->id) }}">{{ $key->comic->title }}</a></h6>
+                                            <h6 class="mt-0 mb-1 two-line-text"><a href="{{ route('comics', $key->comic->id) }}"><i class="flag-icon flag-icon-{{ $key->comic->languages->flag_icon_code }}"></i> {{ $key->comic->title }}</a></h6>
                                             <span><i class="fas fa-users"></i> {{ number_format($key->userBookmarks, 0, ',', '.') }}</span>
                                         </div>
                                     </li>

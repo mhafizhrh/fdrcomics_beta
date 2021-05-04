@@ -117,7 +117,7 @@
                             @foreach ($comic->chapters as $key)
                             <li class="list-group-item">
                                 <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
-                                <a href="{{ route('read', $key->id) }}">[{{ Str::upper($key->languages->code) }}] Chapter {{ $key->chapter }}</a>
+                                <a href="{{ route('read', $key->id) }}">[{{ Str::upper($key->languages->code) }}] Chapter {{ $key->chapter }} @if ($key->title) - {{ $key->title }} @endif</a>
                             </li>
                             @endforeach
                         </ul>
@@ -127,8 +127,8 @@
         </div>
     </div>
 </div>
-<script src="{{ asset('storage') }}/AdminLTE/plugins/jquery/jquery.min.js"></script>
-<script src="{{ asset('storage') }}/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
   $("#keyword").on("keyup", function() {
