@@ -7,28 +7,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>{{ config('app.name') }} - Read Comic Online</title>
+		<title>{{ config('app.name') }} - @yield('title', 'Read Comic Online')</title>
 		<link rel="icon" href="{{ asset('storage/images/sancomics_logo.png') }}">
 	
 		<meta name="author" content="Fizh vi Britannia">
-		<meta name="keywords" content="Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc">
-		<meta name="description" content="Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc.">
+		<meta name="keywords" content="@yield('keywords', 'Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc')">
+		<meta name="description" content="@yield('description', 'Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc')">
 
 		<meta name="google-site-verification" content="BEuJeTPic-U_X5rRk0fT3-rFtsLXNmi7F4usg_8K5Q0" />
 
 		<!-- Open Graph / Facebook -->
 		<meta property="og:type" content="website">
-		<meta property="og:url" content="{{ url('/') }}">
-		<meta property="og:title" content="{{ config('app.name') }} - Read Comic Online">
-		<meta property="og:description" content="Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc.">
-		<!-- <meta property="og:image" content="{{ asset('storage/images/sancomics_logo.png') }}"> -->
+		<meta property="og:url" content="{{ Request::url() }}">
+		<meta property="og:title" content="{{ config('app.name') }} - @yield('title', 'Read Comic Online')">
+		<meta property="og:description" content="@yield('description', 'Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc')">
+		<meta property="og:image" content="@yield('image')">
 
 		<!-- Twitter -->
 		<meta property="twitter:card" content="summary_large_image">
-		<meta property="twitter:url" content="{{ url('/') }}">
-		<meta property="twitter:title" content="{{ config('app.name') }} - Read Comic Online">
-		<meta property="twitter:description" content="Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc.">
-		<!-- <meta property="twitter:image" content="{{ asset('storage/images/sancomics_logo.png') }}">		 -->
+		<meta property="twitter:url" content="{{ Request::url() }}">
+		<meta property="twitter:title" content="{{ config('app.name') }} - @yield('title', 'Read Comic Online')">
+		<meta property="twitter:description" content="@yield('description', 'Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc')">
+		<meta property="twitter:image" content="@yield('image')">		
 		
 		<!-- Google Font: Source Sans Pro -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -60,6 +60,61 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				display: -webkit-box;
 				-webkit-line-clamp: 10;
 				-webkit-box-orient: vertical;
+			}
+
+			.img-cover {
+				width: 100px;
+			}
+
+			@media only screen and (max-width: 767px) {
+				.img-cover {
+					width: 70px;
+				}
+
+				.img-content {
+					padding-left: 0;
+					padding-right: 0;
+					margin-left: 0;
+					margin-right: 0;
+				}
+
+				.content {
+					margin-left: 0;
+					margin-right: 0;
+					padding-left: 0;
+					padding-right: 0;
+				}
+
+				.mx-custom-0 {
+					margin-left: 0;
+					margin-right: 0;
+				}
+
+				.px-custom-0 {
+					padding-left: 0;
+					padding-right: 0;
+				}
+			}
+
+			#myBtn {
+			  display: none;
+			  position: fixed;
+			  bottom: 10px;
+			  right: 15px;
+			  z-index: 99;
+			  font-size: 18px;
+			  border: none;
+			  outline: none;
+			  background-color: #000000;
+			  color: white;
+			  cursor: pointer;
+			  padding: 10px;
+			  border-radius: 4px;
+			  opacity: .5;
+			}
+
+			#myBtn:hover {
+			  background-color: #555;
 			}
 		</style>
 		<script data-ad-client="ca-pub-1575265364325990" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -165,6 +220,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<!-- Main content -->
 				@yield('content')
 				<!-- /.content -->
+				<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 			</div>
 			<!-- /.content-wrapper -->
 			<!-- Control Sidebar -->
@@ -201,6 +257,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bs-custom-file-input/1.3.4/bs-custom-file-input.min.js"></script>
 	</body>
 	<script>
+		//Get the button
+		var mybutton = document.getElementById("myBtn");
+
+		// When the user scrolls down 20px from the top of the document, show the button
+		window.onscroll = function() {scrollFunction()};
+
+		function scrollFunction() {
+		  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+		    mybutton.style.display = "block";
+		  } else {
+		    mybutton.style.display = "none";
+		  }
+		}
+
+		// When the user clicks on the button, scroll to the top of the document
+		function topFunction() {
+		  document.body.scrollTop = 0;
+		  document.documentElement.scrollTop = 0;
+		}
+
 		$(function () {
 		  	bsCustomFileInput.init();
 		});
@@ -277,4 +353,5 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			$(".custom-control-label").html("Light Mode");
 		}
 	</script>
+	@yield('js')
 </html>

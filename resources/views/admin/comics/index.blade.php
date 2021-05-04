@@ -1,28 +1,29 @@
 @extends('admin.layout')
-@section('content')
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Comics</h1>
-                </div>
+@section('content-header')
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Comics</h1>
             </div>
         </div>
     </div>
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ route('admin.comics.new') }}" class="btn btn-default mb-1"><i class="fa fa-plus-square"></i> New Comic</a>
-                </div>
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Comics</h3>
-                        </div>
-                        <div class="card-body table-responsive">
-                            <div class="table-responsive">
+</div>
+@endsection
+@section('content')
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ route('admin.comics.new') }}" class="btn btn-default mb-1"><i class="fa fa-plus-square"></i> New Comic</a>
+            </div>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Comics</h3>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <div class="table-responsive">
                             <table class="table table-striped" id="datatables">
                                 <thead>
                                     <tr>
@@ -36,7 +37,6 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($comics as $key)
-
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $key->title }}</td>
@@ -52,11 +52,9 @@
                                             </div>
                                         </td>
                                     </tr>
-
                                     @endforeach
                                 </tbody>
                             </table>
-                            </div>
                         </div>
                     </div>
                 </div>

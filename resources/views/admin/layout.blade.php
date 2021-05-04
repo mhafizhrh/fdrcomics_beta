@@ -13,6 +13,7 @@
         <!-- Theme style -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     </head>
     <body class="hold-transition sidebar-mini layout-navbar-fixed dark-mode">
 		<div class="wrapper">
@@ -227,7 +228,7 @@
 		                        </a>
 		                    </li>
 		                    <li class="nav-item">
-		                        <a href="#" class="nav-link">
+		                        <a href="{{ route('admin.languages') }}" class="nav-link">
 		                            <i class="nav-icon fas fa-tags"></i>
 		                            <p>
 		                                Languages
@@ -235,7 +236,7 @@
 		                        </a>
 		                    </li>
 		                    <li class="nav-item">
-		                        <a href="#" class="nav-link">
+		                        <a href="{{ route('admin.comments') }}" class="nav-link">
 		                            <i class="nav-icon fas fa-comment-alt"></i>
 		                            <p>
 		                                Comments
@@ -257,7 +258,10 @@
 		        <!-- /.sidebar -->
 		    </aside>
 		    <!-- Content Wrapper. Contains page content -->
-		    @yield('content')
+		    <div class="content-wrapper">
+		    	@yield('content-header')
+			    @yield('content')
+			</div>
 		    <!-- Control Sidebar -->
 		    <aside class="control-sidebar control-sidebar-dark">
 		        <!-- Control sidebar content goes here -->
@@ -353,5 +357,6 @@
 			    });
 			})
         </script>
+        @yield('js')
     </body>
 </html>

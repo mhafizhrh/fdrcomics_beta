@@ -82,6 +82,8 @@ class ChapterController extends Controller
             $chapterContent->save();
         }
 
+        $comic->touch();
+
         return redirect(route('comic.show', $comic->id))->with('status', 'A new chapter has been added.');
     }
 

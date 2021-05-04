@@ -10,12 +10,12 @@ class AdminAuthorsController extends Controller
     protected function index()
     {
     	$authors = Author::all();
-    	return view('admin.authors.index', compact('authors'));
+    	return view('admin.authors.index', compact('authors')); 
     }
 
     protected function new()
     {
-    	return view('admin.authors.new'); 
+    	return view('admin.authors.new'); // test
     }
 
     protected function store(Request $request)

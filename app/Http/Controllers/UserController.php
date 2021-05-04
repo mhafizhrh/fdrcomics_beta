@@ -44,7 +44,7 @@ class UserController extends Controller
     protected function profileUpdate(Request $request)
     {
 
-        // dd($request);
+        // dd(Storage::allFiles('public/images'));
         $request->validate([
             'name' => 'required',
             'img_path' => 'image|mimes:jpeg,png,jpg,gif,svg',
@@ -66,6 +66,8 @@ class UserController extends Controller
             $user->img_path = $path;
         }
         $user->save();
+
+        // dd($path);
 
         return redirect()->route('user.settings')->with('success', 'Profile Updated.');
     }

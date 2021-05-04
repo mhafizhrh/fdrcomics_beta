@@ -24,6 +24,7 @@ class HomeController extends Controller
         $weeklyPopularChapters = Visitor::whereBetween('updated_at', [$oneWeekAgo, $currentDate])
         		->selectRaw('chapter_id, SUM(count) AS visitedCount')
         		->groupBy('chapter_id')
+            ->orderBy('visitedCount', 'desc')
       			->limit(10)
       			->get();
 

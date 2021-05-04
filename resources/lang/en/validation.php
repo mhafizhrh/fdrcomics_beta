@@ -159,7 +159,9 @@ return [
         'current_password' => 'Password',
         'new_password' => 'New Password',
         'new_password_confirmation' => 'New password confirmation',
-        'img_path' => 'File'
+        'img_path' => 'File',
+        'flag_icon_code' => 'Flag Icon Code',
+        'language' => 'Language',
     ],
 
 ];

@@ -6,6 +6,9 @@ use App\Http\Controllers\AdminComicsController;
 use App\Http\Controllers\AdminChaptersController;
 use App\Http\Controllers\AdminGenresController;
 use App\Http\Controllers\AdminAuthorsController;
+use App\Http\Controllers\AdminLanguagesController;
+use App\Http\Controllers\AdminCommentsController;
+use App\Http\Controllers\AdminUsersController;
 
 
 use App\Http\Controllers\AuthController;
@@ -180,5 +183,26 @@ Route::middleware(['auth'])->group(function () {
 
 		Route::post('/admin/authors/store', [AdminAuthorsController::class, 'store'])
 		->name('admin.authors.store');
+
+		// Languages
+
+		Route::get('/admin/languages', [AdminLanguagesController::class, 'index'])
+		->name('admin.languages');
+
+		Route::get('/admin/languages/new', [AdminLanguagesController::class, 'new'])
+		->name('admin.languages.new');
+
+		Route::post('/admin/languages/store', [AdminLanguagesController::class, 'store'])
+		->name('admin.languages.store');
+
+		// Users
+
+		Route::get('/admin/users', [AdminUsersController::class, 'index'])
+		->name('admin.users');
+
+		// Comments
+
+		Route::get('/admin/comments', [AdminCommentsController::class, 'index'])
+		->name('admin.comments');
 	});
 });
