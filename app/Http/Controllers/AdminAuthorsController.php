@@ -15,7 +15,7 @@ class AdminAuthorsController extends Controller
 
     protected function new()
     {
-    	return view('admin.authors.new');
+    	return view('admin.authors.new'); 
     }
 
     protected function store(Request $request)

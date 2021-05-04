@@ -7,7 +7,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>{{ config('app.name') }}</title>
+		<title>{{ config('app.name') }} - Read Comic Online</title>
+		<link rel="icon" href="{{ asset('storage/images/sancomics_logo.png') }}">
+	
+		<meta name="author" content="Fizh vi Britannia">
+		<meta name="keywords" content="Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc">
+		<meta name="description" content="Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc.">
+
+		<meta name="google-site-verification" content="BEuJeTPic-U_X5rRk0fT3-rFtsLXNmi7F4usg_8K5Q0" />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="{{ url('/') }}">
+		<meta property="og:title" content="{{ config('app.name') }} - Read Comic Online">
+		<meta property="og:description" content="Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc.">
+		<!-- <meta property="og:image" content="{{ asset('storage/images/sancomics_logo.png') }}"> -->
+
+		<!-- Twitter -->
+		<meta property="twitter:card" content="summary_large_image">
+		<meta property="twitter:url" content="{{ url('/') }}">
+		<meta property="twitter:title" content="{{ config('app.name') }} - Read Comic Online">
+		<meta property="twitter:description" content="Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc.">
+		<!-- <meta property="twitter:image" content="{{ asset('storage/images/sancomics_logo.png') }}">		 -->
+		
 		<!-- Google Font: Source Sans Pro -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 		<!-- Font Awesome Icons -->
@@ -40,6 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				-webkit-box-orient: vertical;
 			}
 		</style>
+		<script data-ad-client="ca-pub-1575265364325990" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 	</head>
 	<body class="hold-transition layout-top-nav">
 		<div class="wrapper">
@@ -62,11 +85,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									Home
 								</a>
 							</li>
+							@if (Auth::check() && Auth::user()->role == 'admin')
+							<li class="nav-item">
+								<a href="{{ route('admin.dashboard') }}" class="nav-link">
+									<i class="nav-icon fas fa-book"></i>
+									Dashboard (Admin)
+								</a>
+							</li>
+							@endif
 							@if (Auth::check())
 							<li class="nav-item">
 								<a href="{{ route('user.bookmarks') }}" class="nav-link">
 									<i class="nav-icon fas fa-book"></i>
-									Bookmarks
+									Bookmarks   
 								</a>
 							</li>
 							<li class="nav-item">
@@ -151,7 +182,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					Developed by <a href="#about-me">Fizh vi Britannia</a>
 				</div>
 				<!-- Default to the left -->
-				<strong>Copyright &copy; 2021 <a href="https://sancomics.xyz">SANComics</a>.</strong> All rights reserved.
+				<strong>Copyright &copy; 2021 <a href="https://fdrcomics.ddns.net">{{ config('app.name') }}</a>.</strong> All rights reserved.
 			</footer>
 		</div>
 		<!-- ./wrapper -->

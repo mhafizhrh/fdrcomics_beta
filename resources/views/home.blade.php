@@ -17,7 +17,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Recent Update</h3>
+                        <h3 class="card-title">Latest Update</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -35,8 +35,8 @@
                                     </button>
                                     @endif
                                 </form>
-                                <h5 class="mt-0 text-row-2"><a href="{{ route('comics', $key->id) }}"><i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i> {{ $key->title }}</a></h5>
-                                <img src="@if ($key->img_path) {{ asset('storage/'.$key->img_path) }} @else {{ asset('storage/images/sancomics_cover.png') }} @endif" width="100" class="img-thumbnail float-left mr-2">
+                                <h5 class="mt-0 text-row-1"><a href="{{ route('comics', $key->id) }}"><i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i> {{ $key->title }}</a></h5>
+                                <img src="@if ($key->img_path) {{ asset('storage/'.$key->img_path) }} @else {{ asset('storage/images/sancomics_cover.png') }} @endif" width="80" class="img-thumbnail float-left mr-2">
                                 <ul class="list-unstyled">
                                     @foreach ($key->chapters as $key)
                                     <li>
@@ -85,7 +85,7 @@
                                             </td>
                                             <td>
                                                 <i class="fas fa-eye"></i>
-                                                {{ number_format($key->visitedCount+3333, 0, ',', '.') }}
+                                                {{ number_format($key->visitedCount, 0, ',', '.') }}
                                             </td>
                                         </tr>
                                         @endforeach

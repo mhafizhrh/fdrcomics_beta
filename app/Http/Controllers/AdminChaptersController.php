@@ -16,6 +16,8 @@ class AdminChaptersController extends Controller
     {
     	$comic = Comic::find($comic_id);
     	$languages = Language::all();
+		
+		abort_if(!$comic, 404);
 
     	return view('admin.comics.chapters.new', compact('comic', 'languages'));
     }
@@ -65,7 +67,9 @@ class AdminChaptersController extends Controller
     protected function edit($chapter_id)
     {
         $chapter = Chapter::find($chapter_id);
-        $languages = Language::all();
+        $languages = Language::all(); 
+		
+		abort_if(!$chapter, 404);
 
         return view('admin.comics.chapters.edit', compact('chapter', 'languages'));
     }

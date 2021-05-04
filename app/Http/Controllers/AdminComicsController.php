@@ -48,13 +48,15 @@ class AdminComicsController extends Controller
         $comics->status = $request->input('status');
         $comics->save();
 
-        foreach ($request->genre_id as $key => $value) {
+		if ($request->genre_id) {
+			foreach ($request->genre_id as $key => $value) {
 
-            $genres = new ComicGenre();
-            $genres->genre_id = $value;
-            $genres->comic_id = $comics->id;
-            $genres->save();
-        }
+				$genres = new ComicGenre();
+				$genres->genre_id = $value;
+				$genres->comic_id = $comics->id;
+				$genres->save();
+			}
+		}
 
         return redirect()->route('admin.comics.new')->with('success', 'New Comic has been added.');
     }
@@ -103,13 +105,15 @@ class AdminComicsController extends Controller
 
         ComicGenre::where('comic_id', $comic_id)->delete();
 
-        foreach ($request->genre_id as $key => $value) {
+		if ($request->genre_id) {
+			foreach ($request->genre_id as $key => $value) {
 
-            $genres = new ComicGenre();
-            $genres->genre_id = $value;
-            $genres->comic_id = $comic->id;
-            $genres->save();
-        }
+				$genres = new ComicGenre();
+				$genres->genre_id = $value;
+				$genres->comic_id = $comic->id;
+				$genres->save();
+			}
+		}
 
         return redirect()->route('admin.comics.edit', $comic_id)->with('success', 'Comic Updated.');
     }
