@@ -39,6 +39,7 @@ class HomeController extends Controller
 
       	$popularComics = Bookmark::selectRaw('comic_id, COUNT(*) AS userBookmarks')
       			->groupBy('comic_id')
+            ->orderBy('userBookmarks', 'desc')
       			->limit(10)
       			->get();
 

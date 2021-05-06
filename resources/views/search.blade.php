@@ -33,37 +33,39 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="result">
                                 <div class="row">
-                                    @foreach ($comics as $key)
-                                    <div class="col-md-6 mb-2">
-                                        <form method="post" action="{{ route('comics.bookmark', $key->id) }}">
-                                            @csrf
-                                            @if (Auth::check() && $key->bookmark)
-                                            <button class="btn btn-danger btn-sm float-right confirm-delete">
-                                            <i class="fas fa-trash"></i>
-                                            </button>
-                                            @else
-                                            <button class="btn btn-info btn-sm float-right">
-                                            <i class="fas fa-book"></i>
-                                            </button>
-                                            @endif
-                                        </form>
-                                        <h5 class="mt-0 text-row-2">
-                                            <a href="{{ route('comics', $key->id) }}">
-                                                <i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i>
-                                                {{ $key->title }}
-                                            </a>
-                                        </h5>
-                                        <img src="@if ($key->img_path) {{ asset('storage/'.$key->img_path) }} @else {{ asset('storage/images/sancomics_cover.png') }} @endif" width="100" class="img-thumbnail float-left mr-2">
+                                    <div class="col-md-12">
                                         <ul class="list-unstyled">
-                                            @foreach ($key->chapters as $key)
-                                            <li>
-                                                <a href="{{ route('read', $key->id) }}"><i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i> Chapter {{ $key->chapter }}</a>
-                                                <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
+                                            @foreach ($comics as $key)
+                                            <li class="media mb-2">
+                                                <img class="mr-3 img-cover" src="{{ asset('storage/'.$key->img_path) }}" alt="{{ $key->title }} cover">
+                                                <div class="media-body">
+                                                    <h5 class="mt-0 mb-0 text-row-1"><i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i> <a href="{{ route('comics', $key->id) }}">{{ $key->title }}</a></h5>
+                                                    <div>
+                                                        <form method="post" action="{{ route('comics.bookmark', $key->id) }}" class="float-right">
+                                                            @csrf
+                                                            @if (Auth::check() && $key->bookmark)
+                                                            <a href="javascript:void(0);" class="badge badge-success" onclick="$(this).parents('form').submit();"><i class="fa fa-check"></i> Bookmarked</a>
+                                                            @else
+                                                            <a href="javascript:void(0);" class="badge badge-primary" onclick="$(this).parents('form').submit();"><i class="fa fa-book"></i> Bookmark</a>
+                                                            @endif
+                                                        </form>
+                                                        Rating : {{ round($key->ratings()->rating, 2) }}
+                                                    </div>
+                                                    <ul class="list-unstyled">
+                                                        @foreach ($key->chapters()->limit(4)->get() as $key)
+                                                        <li>
+                                                            <a href="{{ route('read', $key->id) }}">
+                                                                <i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i> Chapter {{ $key->chapter }}
+                                                            </a>
+                                                            <span class="float-right">{{ $key->updated_at->diffForHumans() }}</span>
+                                                        </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             </li>
                                             @endforeach
                                         </ul>
                                     </div>
-                                    @endforeach
                                     @if ($comics->count() <= 0)
                                     <div class="col-md-12">
                                         <div class="alert alert-default text-warning">
@@ -94,7 +96,12 @@
                                                     <!-- <input type="checkbox" name="genres[]" value="" hidden="" checked=""> -->
                                                     @foreach ($genres as $key)
                                                     <div class="col-md-3 col-sm-4 col-6">
-                                                        <input type="checkbox" value="{{ $key->id }}" name="genres[]" @if ($request->genres && in_array($key->id, $request->genres)) checked @endif> {{ $key->name }}
+                                                        <div class="icheck-primary">
+                                                            <input type="checkbox" id="remember{{ $key->id }}" value="{{ $key->id }}" name="genres[]" @if ($request->genres && in_array($key->id, $request->genres)) checked @endif>
+                                                            <label for="remember{{ $key->id }}">
+                                                                {{ $key->name }}
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                     @endforeach
                                                 </div>
@@ -104,9 +111,9 @@
                                                 <div class="col-md-8 row">
                                                     <!-- <input type="checkbox" name="genres[]" value="" hidden="" checked=""> -->
                                                     <select class="form-control" name="language">
-                                                    @foreach ($languages as $key)
-                                                    <option value="{{ $key->id }}" @if ($key->id == $request->language) selected @endif>{{ $key->language }}</option>
-                                                    @endforeach
+                                                        @foreach ($languages as $key)
+                                                        <option value="{{ $key->id }}" @if ($key->id == $request->language) selected @endif>{{ $key->language }}</option>
+                                                        @endforeach
                                                     </select>
                                                     <div class="col-md-12">
                                                         <p><i class="fa fa-info-circle"></i> Main language is the language that comes from raw.</p>

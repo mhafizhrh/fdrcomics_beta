@@ -23,6 +23,9 @@
 		<div class="row">
 			<div class="col-md-12">
 				<a href="{{ route('admin.languages.new') }}" class="btn btn-default mb-1"><i class="fa fa-plus-square"></i> New Language</a>
+				@if(session('success'))
+				<div class="alert alert-success mb-1">{{ session('success') }}</div>
+				@endif
 				<div class="card">
 					<div class="card-body">
 						<input type="text" id="keyword" class="form-control mb-1" placeholder="Search...">
@@ -35,8 +38,12 @@
 										<span class="sr-only">Options</span>
 									</a>
 									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-										<a class="dropdown-item" href="#">Edit</a>
-										<form><button class="dropdown-item">Delete</button></form>
+										<a class="dropdown-item" href="{{ route('admin.languages.edit', $key->id) }}">Edit</a>
+										<form method="post" action="{{ route('admin.languages.delete', $key->id) }}">
+											@csrf
+											@method('delete')
+											<button class="dropdown-item">Delete</button>
+										</form>
 									</div>
 								</div>
 							</li>

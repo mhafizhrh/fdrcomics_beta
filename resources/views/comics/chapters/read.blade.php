@@ -71,6 +71,9 @@
 		</div>
 	</div>
 	<div class="row">
+		<div class="col-md-6 offset-md-3 my-3">
+			<div id="SC_TBlock_847634"></div>
+		</div>
 		<div class="col-md-6 offset-md-3">
 			<select class="form-control mb-1" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);" id="chapter-select">
 				@foreach ($chapter->comic->chapters as $key)
@@ -83,10 +86,10 @@
 		<div class="col-md-6 offset-md-3">
 			<div class="row">
 				<div class="col-md-6 col-sm-6 col-6">
-					<button type="button" class="btn btn-primary btn-block float-right mb-2" onclick="previousBtn()" id="prevBtn"><i class="fas fa-arrow-left"></i> Previous</button>
+					<button type="button" class="btn btn-primary btn-block float-right mb-2" onclick="previousBtn()" id="prevBtn2"><i class="fas fa-arrow-left"></i> Previous</button>
 				</div>
 				<div class="col-md-6 col-sm-6 col-6">
-					<button type="button" class="btn btn-primary btn-block float-right mb-2" onclick="nextBtn()" id="nextBtn">Next <i class="fas fa-arrow-right"></i></button>
+					<button type="button" class="btn btn-primary btn-block float-right mb-2" onclick="nextBtn()" id="nextBtn2">Next <i class="fas fa-arrow-right"></i></button>
 				</div>
 			</div>
 		</div>
@@ -101,7 +104,7 @@
 				<div class="card-body card-comments">
 					<div class="card-comment">
 						@foreach ($comments as $key)
-						<img class="img-circle img-sm" src="@if ($key->user->img_path) {{ asset('storage/' . $key->user->img_path) }} @else {{ asset('storage/images/sancomics_cover.png') }} @endif" alt="User Image">
+						<img class="img-circle img-sm" src="@if ($key->user->img_path) {{ asset('storage/' . $key->user->img_path) }} @else {{ asset('storage/images/fdrcomics-logo.png') }} @endif" alt="User Image">
 						<div class="comment-text">
 							<span class="username">
 								{{ $key->user->name }}
@@ -117,13 +120,16 @@
 							<div class="text-row-10" onclick="toggleEllipsis()">{!! $key->comment !!}</div>
 						</div>
 						@endforeach
+						@if ($comments->count() >= 20)
+						<a href="{{ route('comments', $chapter->id) }}" class="float-right">See all comments</a>
+						@endif
 					</div>
 				</div>
 				<div class="card-footer">
 					@if (Auth::check())
 					<form action="{{ route('comment.store', $chapter->id) }}" method="post">
 						@csrf
-						<img class="img-fluid img-circle img-sm" src="@if (Auth::user()->img_path) {{ asset('storage/' . Auth::user()->img_path) }} @else {{ asset('storage/images/sancomics_cover.png') }} @endif" alt="Alt Text">
+						<img class="img-fluid img-circle img-sm" src="@if (Auth::user()->img_path) {{ asset('storage/' . Auth::user()->img_path) }} @else {{ asset('storage/images/fdrcomics-logo.png') }} @endif" alt="Alt Text">
 						<div class="img-push">
 							<!-- <input type="text" class="form-control form-control-sm" placeholder="Press enter to post comment" name="comment"> -->
 							<div class="input-group">
@@ -140,8 +146,13 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-md-12">
+			<div id="SC_TBlock_847636"></div>
+		</div>
 	</div>
 </div>
+@endsection
+@section('js')
 <script>
 $(document).ready(function(){
 	$(".btn-tool-comment").on('click', function(){
@@ -153,18 +164,35 @@ $(document).ready(function(){
 	});
 	$("#comment-card").addClass(window.localStorage.getItem("comment"));
 	console.log(window.localStorage.getItem("comment"));
-	if ($("#chapter-select")[0].options[$("#chapter-select")[0].selectedIndex + 1]) {
-		$("#nextBtn").attr('disabled', true);
-	}
-	if ($("#chapter-select")[0].options[$("#chapter-select")[0].selectedIndex - 1]) {
+	// if ($("#chapter-select")[0].options[$("#chapter-select")[0].selectedIndex + 1]) {
+	// 	$("#nextBtn").attr('disabled', true);
+	// }
+	// if ($("#chapter-select")[0].options[$("#chapter-select")[0].selectedIndex - 1]) {
+	// 	$("#prevBtn").attr('disabled', true);
+	// }
+	// // SECOND BTN
+	// if ($("#chapter-select2")[0].options[$("#chapter-select2")[0].selectedIndex + 1]) {
+	// 	$("#nextBtn2").attr('disabled', true);
+	// }
+	// if ($("#chapter-select2")[0].options[$("#chapter-select2")[0].selectedIndex - 1]) {
+	// 	$("#prevBtn2").attr('disabled', true);
+	// }
+
+	const index = $("#chapter-select")[0].selectedIndex;
+	const prevOption = $("#chapter-select")[0].options[index+1];
+	const nextOption = $("#chapter-select")[0].options[index-1];
+
+	console.log("Prev : " + prevOption);
+	console.log("Next : " + nextOption);
+
+	if (!prevOption) {
 		$("#prevBtn").attr('disabled', true);
-	}
-	// SECOND BTN
-	if ($("#chapter-select2")[0].options[$("#chapter-select2")[0].selectedIndex + 1]) {
-		$("#nextBtn2").attr('disabled', true);
-	}
-	if ($("#chapter-select2")[0].options[$("#chapter-select2")[0].selectedIndex - 1]) {
 		$("#prevBtn2").attr('disabled', true);
+	}
+
+	if (!nextOption) {
+		$("#nextBtn").attr('disabled', true);
+		$("#nextBtn2").attr('disabled', true);
 	}
 })
 function previousBtn() {

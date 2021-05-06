@@ -121,7 +121,7 @@
                                         {!! $key->comment !!}
                                     </p>
                                     <p>
-                                        <a href="{{ route('read', $key->chapter_id) . '#comment-card' }}" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Go to comment</a>
+                                        <<a href="{{ route('comments', $key->chapter_id) . '#comment-card' }}" class="link-black text-sm mr-2" target="_blank"><i class="fas fa-share mr-1"></i> Go to comment</a>
                                     </p>
                                 </div>
 

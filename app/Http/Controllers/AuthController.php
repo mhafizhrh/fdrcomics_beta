@@ -22,7 +22,7 @@ class AuthController extends Controller
     {
     	$credentials = $request->only('username', 'password');
 
-        if (Auth::guard()->attempt($credentials)) {
+        if (Auth::guard()->attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
 
             if (Auth::user()->role == 'admin') {

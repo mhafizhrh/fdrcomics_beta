@@ -20,7 +20,7 @@ class ReadController extends Controller
 		
         $chapters = Chapter::where('comic_id', $chapter->comic_id)
                 ->orderByRaw('created_at DESC, chapter DESC')->get();
-        $comments = Comment::where('chapter_id', $chapter_id)->get();
+        $comments = Comment::where('chapter_id', $chapter_id)->limit(20)->get();
 
         $this->visitorCount($chapter_id);
         $this->readHistory($chapter_id);

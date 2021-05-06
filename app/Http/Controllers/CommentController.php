@@ -10,6 +10,13 @@ use App\Models\Comment;
 
 class CommentController extends Controller
 {
+    protected function index($chapter_id)
+    {
+        $comments = Comment::where('chapter_id', $chapter_id)->paginate(20);
+
+        return view('comics.chapters.comments', compact('comments'));
+    }
+
     protected function store(Request $request, $chapter_id)
     {
     	$request->validate([

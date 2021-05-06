@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>{{ config('app.name') }} - @yield('title', 'Read Comic Online')</title>
-		<link rel="icon" href="{{ asset('storage/images/sancomics_logo.png') }}">
+		<link rel="icon" href="{{ asset('storage/images/fdrcomics-logo.png') }}">
 	
 		<meta name="author" content="Fizh vi Britannia">
 		<meta name="keywords" content="@yield('keywords', 'Read Manga, Manhua, Manhwa Online free English, Bahasa Indonesia, Etc')">
@@ -37,6 +37,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<!-- Theme style -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css">
 		<style>
 			.text-row-1 {
 				overflow: hidden;
@@ -64,11 +65,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 			.img-cover {
 				width: 100px;
+				height: 150px;
+				object-fit: cover;
 			}
 
 			@media only screen and (max-width: 767px) {
 				.img-cover {
 					width: 70px;
+					height: 120px;
+					object-fit: cover;
 				}
 
 				.img-content {
@@ -118,6 +123,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			}
 		</style>
 		<script data-ad-client="ca-pub-1575265364325990" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<meta name="google-site-verification" content="zUiEKl0DmdVMll_YgJRGou6ctR0qZBAG7X2ipIbLsNY" />
 	</head>
 	<body class="hold-transition layout-top-nav">
 		<div class="wrapper">
@@ -125,7 +131,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<nav class="main-header navbar navbar-expand-md navbar-light">
 				<div class="container">
 					<a href="{{ route('home') }}" class="navbar-brand">
-						<img src="{{ asset('storage/images/sancomics_logo.png') }}" alt="SANComics Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+						<img src="{{ asset('storage/images/fdrcomics-logo.png') }}" alt="SANComics Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
 						<span class="brand-text font-weight-light">{{ config('app.name') }}</span>
 					</a>
 					<button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -238,7 +244,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					Developed by <a href="#about-me">Fizh vi Britannia</a>
 				</div>
 				<!-- Default to the left -->
-				<strong>Copyright &copy; 2021 <a href="https://fdrcomics.ddns.net">{{ config('app.name') }}</a>.</strong> All rights reserved.
+				<strong>Copyright &copy; 2021 <a href="{{ config('app.url') }}">{{ config('app.name') }}</a>.</strong> All rights reserved.
 			</footer>
 		</div>
 		<!-- ./wrapper -->

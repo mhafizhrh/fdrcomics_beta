@@ -16,12 +16,14 @@
 	</div>
 </div>
 @endsection
+
 @section('content')
 <div class="content">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
 				<a href="{{ route('admin.languages') }}" class="btn btn-default mb-1"><i class="fa fa-arrow-left"></i> Back</a>
+				<a href="{{ route('admin.languages.new') }}" class="btn btn-default mb-1"><i class="fa fa-plus-square"></i> Edit Languages</a>
 				@if ($errors->any())
 				<div class="alert alert-danger mb-1">
 					<ul>
@@ -36,13 +38,14 @@
 				@endif
 				<div class="card">
 					<div class="card-body">
-						<form method="post" action="{{ route('admin.languages.store') }}">
+						<form method="post" action="{{ route('admin.languages.update', $language->id) }}">
 							@csrf
+							@method('put')
 							<div class="form-group row">
 								<label class="col-md-4">Flag Icon Code</label>
 								<div class="col-md-8">
 									<div class="input-group">
-										<input type="text" name="flag_icon_code" class="form-control" id="flag-icon-code">
+										<input type="text" name="flag_icon_code" id="flag-icon-code" class="form-control" value="{{ $language->flag_icon_code }}">
 										<div class="input-group-append">
 											<span id="flag-icon-preview" class="input-group-text">Preview</span>
 										</div>
@@ -52,12 +55,12 @@
 							<div class="form-group row">
 								<label class="col-md-4">Language</label>
 								<div class="col-md-8">
-									<input type="text" name="language" class="form-control">
+									<input type="text" name="language" class="form-control" value="{{ $language->language }}">
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col-md-8 offset-md-4">
-									<button class="btn btn-default float-right">Create</button>
+									<button class="btn btn-default float-right">Update</button>
 								</div>
 							</div>
 						</form>
@@ -68,9 +71,13 @@
 	</div>
 </div>
 @endsection
+
 @section('js')
 <script>
-	$("#flag-icon-code").on('keyup', function() {
+	$(document).ready(function() {
+		$("#flag-icon-preview").html(`<i class="flag-icon flag-icon-`+ $("#flag-icon-code").val() +`"></i>`);
+	})
+	$("#flag-icon-code").on('keyup show', function() {
 		const flagIconCode = $(this).val();
 		console.log(flagIconCode);
 		$("#flag-icon-preview").html(`<i class="flag-icon flag-icon-`+flagIconCode+`"></i>`);

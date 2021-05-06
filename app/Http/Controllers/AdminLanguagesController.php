@@ -32,4 +32,30 @@ class AdminLanguagesController extends Controller
 
     	return redirect()->route('admin.languages.new')->with('success', 'New languages have been added.');
     }
+
+    protected function edit($id)
+    {
+        $language = Language::find($id);
+
+        return view('admin.languages.edit', compact('language'));
+    }
+
+    protected function update(Request $request, $id)
+    {
+        $language = Language::find($id);
+        $language->flag_icon_code = $request->input('flag_icon_code');
+        $language->language = $request->input('language');
+        $language->save();
+
+        return redirect()->route('admin.languages.edit', $id)->with('success', 'Language has been updated.');
+    }
+
+    protected function delete($id)
+    {
+        $language = Language::find($id);
+        
+        Language::destroy($id);
+
+        return redirect()->route('admin.languages')->with('success', 'Language has been removed.');
+    }
 }

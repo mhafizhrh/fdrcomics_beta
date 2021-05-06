@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ config('app.name') }}</title>
+        <link rel="icon" href="{{ asset('storage/images/fdrcomics-logo.png') }}">
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
         <!-- Font Awesome -->
@@ -14,6 +15,21 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.1.0/css/adminlte.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+        <style>
+        	.img-cover {
+				width: 100px;
+				height: 150px;
+				object-fit: cover;
+			}
+
+			@media only screen and (max-width: 767px) {
+				.img-cover {
+					width: 70px;
+					height: 120px;
+					object-fit: cover;
+				}
+			}
+        </style>
     </head>
     <body class="hold-transition sidebar-mini layout-navbar-fixed dark-mode">
 		<div class="wrapper">
@@ -278,7 +294,7 @@
 		            Anything you want
 		        </div>
 		        <!-- Default to the left -->
-		        <strong>Copyright &copy; 2021 <a href="https://sancomics.xyz">SANComics</a>.</strong> All rights reserved.
+		        <strong>Copyright &copy; 2021 <a href="{{ config('app.url') }}">{{ config('app.name') }}s</a>.</strong> All rights reserved.
 		    </footer>
 		</div>
 		<!-- jQuery -->

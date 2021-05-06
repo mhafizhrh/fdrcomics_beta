@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SitemapController;
+
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminComicsController;
 use App\Http\Controllers\AdminChaptersController;
@@ -38,11 +40,13 @@ Route::redirect('/admin', '/admin/dashboard');
 Route::redirect('/comic', '/');
 Route::redirect('/chapter', '/');
 Route::redirect('/read', '/');
-Route::redirect('/chapter', '/');
 Route::redirect('/comment', '/');
 
 
 // Main Routes
+
+Route::get('/fdrcomics_sitemap.xml', [SitemapController::class, 'index']);
+Route::get('/fdrcomics_sitemap2.xml', [SitemapController::class, 'index']);
 
 
 Route::get('/auth/login', [AuthController::class, 'login'])
@@ -77,6 +81,9 @@ Route::get('/comics/{comic_id}', [ComicController::class, 'index'])
 
 Route::get('/read/{chapter_id}', [ReadController::class, 'index'])
 ->name('read');
+
+Route::get('/comments/{chapter_id}', [CommentController::class, 'index'])
+->name('comments');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -195,6 +202,15 @@ Route::middleware(['auth'])->group(function () {
 		Route::post('/admin/languages/store', [AdminLanguagesController::class, 'store'])
 		->name('admin.languages.store');
 
+		Route::get('/admin/languages/{id}/edit', [AdminLanguagesController::class, 'edit'])
+		->name('admin.languages.edit');
+
+		Route::put('/admin/languages/{id}/update', [AdminLanguagesController::class, 'update'])
+		->name('admin.languages.update');
+
+		Route::delete('/admin/languages/{id}/delete', [AdminLanguagesController::class, 'delete'])
+		->name('admin.languages.delete');
+
 		// Users
 
 		Route::get('/admin/users', [AdminUsersController::class, 'index'])
@@ -204,5 +220,20 @@ Route::middleware(['auth'])->group(function () {
 
 		Route::get('/admin/comments', [AdminCommentsController::class, 'index'])
 		->name('admin.comments');
+
+		// Route::get('/admin/comments/new', [AdminCommentsController::class, 'new'])
+		// ->name('admin.comments.new');
+
+		// Route::post('/admin/comments/store', [AdminCommentsController::class, 'store'])
+		// ->name('admin.comments.store');
+
+		// Route::get('/admin/comments/{id}/edit', [AdminCommentsController::class, 'edit'])
+		// ->name('admin.comments.edit');
+
+		// Route::put('/admin/comments/{id}/update', [AdminCommentsController::class, 'update'])
+		// ->name('admin.comments.update');
+
+		// Route::delete('/admin/comments/{id}/delete', [AdminCommentsController::class, 'delete'])
+		// ->name('admin.comments.delete');
 	});
 });

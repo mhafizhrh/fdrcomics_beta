@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Watson\Sitemap\SitemapServiceProvider::class,
 
         /*
          * Application Service Providers...

@@ -43,8 +43,19 @@
                             <div class="form-group">
                                 <input type="password" name="password" class="form-control" placeholder="Password" required="">
                             </div>
-                            <div class="form-group">
-                                <button class="btn btn-primary btn-block">Login</button>
+                            <div class="form-group row">
+                                <div class="col-8">
+                                    <div class="icheck-primary">
+                                        <input type="checkbox" id="remember" name="remember">
+                                        <label for="remember">
+                                            Remember Me
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-4">
+                                    <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                                </div>
                             </div>
                         </form>
                     </div>

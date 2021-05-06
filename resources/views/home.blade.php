@@ -37,7 +37,7 @@
                                             Rating : {{ round($key->ratings()->rating, 2) }}
                                         </div>
                                         <ul class="list-unstyled">
-                                            @foreach ($key->chapters as $key)
+                                            @foreach ($key->chapters()->limit(4)->get() as $key)
                                             <li>
                                                 <a href="{{ route('read', $key->id) }}">
                                                     <i class="flag-icon flag-icon-{{ $key->languages->flag_icon_code }}"></i> Chapter {{ $key->chapter }}
